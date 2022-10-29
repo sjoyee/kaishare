@@ -1,0 +1,7 @@
+{
+  "name": "kaishare",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
