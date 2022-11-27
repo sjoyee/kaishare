@@ -1,14 +1,31 @@
-import React, { useRef, useState } from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButtons, IonBackButton, IonSearchbar, IonButton, 
-  IonModal, IonList, IonItem, IonLabel, IonInput, IonIcon, IonSegment, IonSegmentButton, IonInfiniteScroll, IonInfiniteScrollContent } from '@ionic/react';
-import { menu, fastFood } from 'ionicons/icons';
-import './Food.css';
+import React, { useRef, useState } from "react";
+import {
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+  IonButtons,
+  IonBackButton,
+  IonSearchbar,
+  IonButton,
+  IonModal,
+  IonList,
+  IonItem,
+  IonLabel,
+  IonInput,
+  IonIcon,
+  IonSegment,
+  IonSegmentButton,
+  IonInfiniteScroll,
+  IonInfiniteScrollContent,
+} from "@ionic/react";
+import { menu, fastFood } from "ionicons/icons";
+import "./Food.css";
 
-
-
-const Food: React.FC = () => {
-  const modal = useRef<HTMLIonModalElement>(null);
-  const [items, setItems] = useState<string[]>([]);
+const Food = () => {
+  const modal = useRef(null);
+  const [items, setItems] = useState([]);
   const generateItems = () => {
     const newItems = [];
     for (let i = 0; i < 50; i++) {
@@ -23,20 +40,28 @@ const Food: React.FC = () => {
           <IonButtons slot="start">
             <IonBackButton defaultHref="./home"></IonBackButton>
           </IonButtons>
-          <IonTitle id="board_title"><IonIcon class="icon" icon={fastFood}></IonIcon>Food Delivery</IonTitle>
+          <IonTitle id="board_title">
+            <IonIcon class="icon" icon={fastFood}></IonIcon>Food Delivery
+          </IonTitle>
           <IonButtons slot="end">
-            <IonButton id="open-search"><IonIcon slot="icon-only" icon={menu}></IonIcon></IonButton>
+            <IonButton id="open-search">
+              <IonIcon slot="icon-only" icon={menu}></IonIcon>
+            </IonButton>
           </IonButtons>
         </IonToolbar>
-        <IonSearchbar color="light" animated={true} placeholder="Search"></IonSearchbar>
+        <IonSearchbar
+          color="light"
+          animated={true}
+          placeholder="Search"
+        ></IonSearchbar>
         <IonSegment value="default">
-            <IonSegmentButton value="default">
-              <IonLabel>Opened</IonLabel>
-            </IonSegmentButton>
-            <IonSegmentButton value="segment">
-              <IonLabel>Closed</IonLabel>
-            </IonSegmentButton>
-          </IonSegment>
+          <IonSegmentButton value="default">
+            <IonLabel>Opened</IonLabel>
+          </IonSegmentButton>
+          <IonSegmentButton value="segment">
+            <IonLabel>Closed</IonLabel>
+          </IonSegmentButton>
+        </IonSegment>
       </IonHeader>
 
       <IonContent className="event_list">
@@ -62,48 +87,54 @@ const Food: React.FC = () => {
               <IonToolbar>
                 <IonTitle id="modal_title">Advanced Search</IonTitle>
                 <IonButtons slot="end">
-                  <IonButton color="warning" onClick={() => modal.current?.dismiss()}>Close</IonButton>
+                  <IonButton
+                    color="warning"
+                    onClick={() => modal.current?.dismiss()}
+                  >
+                    Close
+                  </IonButton>
                 </IonButtons>
               </IonToolbar>
 
               <IonList>
                 <IonItem>
-                  <IonLabel position='fixed'>Text</IonLabel>
+                  <IonLabel position="fixed">Text</IonLabel>
                   <IonInput></IonInput>
                 </IonItem>
 
                 <IonItem>
-                  <IonLabel position='fixed'>Writer</IonLabel>
+                  <IonLabel position="fixed">Writer</IonLabel>
                   <IonInput></IonInput>
                 </IonItem>
 
                 <IonItem>
-                  <IonLabel position='fixed'>Product</IonLabel>
+                  <IonLabel position="fixed">Product</IonLabel>
                   <IonInput></IonInput>
                 </IonItem>
 
                 <IonItem>
-                  <IonLabel position='fixed'>Participants</IonLabel>
+                  <IonLabel position="fixed">Participants</IonLabel>
                   <IonInput type="number"></IonInput>
                 </IonItem>
 
                 <IonItem>
-                  <IonLabel position='fixed'>Time</IonLabel>
+                  <IonLabel position="fixed">Time</IonLabel>
                   <IonInput type="datetime-local"></IonInput>
                 </IonItem>
 
                 <IonItem>
-                  <IonLabel position='fixed'>Place</IonLabel>
+                  <IonLabel position="fixed">Place</IonLabel>
                   <IonInput></IonInput>
                 </IonItem>
 
                 <IonItem>
-                  <IonLabel position='fixed'>Price</IonLabel>
+                  <IonLabel position="fixed">Price</IonLabel>
                   <IonInput type="number"></IonInput>
                 </IonItem>
 
-                <IonButton id="modal_submit" fill="solid">Search</IonButton>
-
+                <IonButton id="modal_submit" fill="solid">
+                  Search
+                </IonButton>
               </IonList>
             </IonContent>
           </IonModal>
