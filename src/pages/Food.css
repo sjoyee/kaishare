@@ -1,0 +1,17 @@
+#board_title {
+    text-align: center;
+}
+
+#modal_title {
+    
+}
+
+#modal_submit {
+    display:block;
+    margin: auto;
+    width: 100px;
+}
+
+.icon {
+    margin-right: 5px;
+}
