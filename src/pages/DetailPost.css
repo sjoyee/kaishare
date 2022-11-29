@@ -1,0 +1,9 @@
+#PostContent {
+    border-top-style: groove;
+    border-top-width: thin;
+    border-bottom-style: groove;
+    border-bottom-width: thin;
+}
+#CommentWriter {
+    margin-left: 5px;
+}
