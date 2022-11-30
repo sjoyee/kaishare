@@ -1,8 +1,19 @@
-.board {
+#boardList {
+    margin-top: 40%;
+    margin-bottom: 40%;
+}
 
+.board {
+    margin-top: 10%;
+    margin-bottom: 10%;
+    font-size: 5vw;
 }
 .icon {
     display: inline-block;
-    margin-right: 10px;
+    margin-right: 30px;
     margin-left: 1em;
+    font-size: 200%;
+}
+.label {
+    margin-left: 5vw;
 }

@@ -14,7 +14,9 @@ import { home, reader, settings } from "ionicons/icons";
 import Home from "./pages/Home";
 import Food from "./pages/Food";
 import WritePost from "./pages/WritePost";
+import EditPost from "./pages/EditPost";
 import Tab3 from "./pages/Tab3";
+import DetailPost from "./pages/DetailPost";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -47,6 +49,12 @@ const App = () => (
           </Route>
           <Route exact path="/writepost">
             <WritePost />
+          </Route>
+          <Route exact path="/editpost">
+            <EditPost />
+          </Route>
+          <Route exact path="/detailpost">
+            <DetailPost />
           </Route>
           <Route path="/tab3">
             <Tab3 />
