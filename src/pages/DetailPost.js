@@ -13,8 +13,11 @@ import {
     IonTextarea,
     IonInput,
     IonIcon,
+    IonFab,
+    IonFabButton,
+    IonFabList,
   } from "@ionic/react";
-  import { paperPlane } from "ionicons/icons";
+  import { ellipsisVertical, paperPlane, trash, create } from "ionicons/icons";
   import "./DetailPost.css";
   
   import { useState } from "react";
@@ -45,21 +48,43 @@ import {
     // dummy comment list
     const Comment1 = {
         writer: "William",
-        comment: "Hi, everyone!ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
+        comment: "Hi, everyone!ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
+        commentId: "1"
     }
     const Comment2 = {
         writer: "Kelly",
-        comment: "Nice to meet you!"
+        comment: "Nice to meet you!",
+        commentId: "2"
     }
     const commentList = [Comment1, Comment2];
 
-    // for save written comment
-    const [comment, setComment] = useState([]);
-    const saveComment = () => {
-        const comment = {
-            comment: comment
+    // for create new comment
+    const [newComment, setNewComment] = useState([]);
+    const submitNewComment = () => {
+        const _newComment = {
+            writer: "Elice",
+            comment: newComment
         };
-        console.log(comment);
+        console.log(_newComment);
+    };
+
+    // for modify comment
+    const [modifyComment, setModifyComment] = useState([]);
+    const submitModifyComment = () => {
+        const _modifyComment = {
+            writer: "Elice",
+            comment: modifyComment
+        };
+        console.log(_modifyComment);
+    };
+
+    // for delete comment
+    const [deleteComment, setDeleteComment] = useState([]);
+    const submitDeleteComment = () => {
+        const _deleteComment = {
+            commentId: deleteComment
+        };
+        console.log(_deleteComment);
     };
   
     return (
@@ -74,7 +99,7 @@ import {
                             readonly={true}
                             ></IonInput>
                         </IonCardTitle>
-                        <IonButton slot="end">Edit</IonButton>
+                        <IonButton slot="end" href="./EditPost">Edit</IonButton>
                     </IonItem>
                     <IonItem lines="none">
                         <IonCardSubtitle>
@@ -147,6 +172,19 @@ import {
                     <IonList>
                         {commentList.map((comment) => (
                             <IonList>
+                                <IonFab vertical="top" horizontal="end">
+                                    <IonFabButton size="small" color="medium" id="commentMenu">
+                                        <IonIcon icon={ellipsisVertical} id="commentIcon"></IonIcon>
+                                    </IonFabButton>
+                                    <IonFabList side="start">
+                                        <IonFabButton size="small">
+                                            <IonIcon icon={create}></IonIcon>
+                                        </IonFabButton>
+                                        <IonFabButton size="small" onClick={submitDeleteComment}>
+                                            <IonIcon icon={trash}></IonIcon>
+                                        </IonFabButton>
+                                    </IonFabList>
+                                </IonFab>
                                 <h2 id="CommentWriter">{comment.writer}</h2>
                                 <IonTextarea 
                                     value={comment.comment}
@@ -166,9 +204,9 @@ import {
                         autoGrow={true}
                         rows="1"
                         onIonChange={(e) => {
-                            setComment(e.detail.value);
+                            setNewComment(e.detail.value);
                         }}></IonTextarea>
-                        <IonButton slot="end" fill="clear" onClick={saveComment}>
+                        <IonButton slot="end" fill="clear" onClick={submitNewComment}>
                             <IonIcon icon={paperPlane}></IonIcon>
                         </IonButton>
                     </IonItem>

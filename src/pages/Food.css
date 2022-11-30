@@ -2,16 +2,26 @@
     text-align: center;
 }
 
-#modal_title {
-    
+#postWriter {
+    display: block;
+    width: 120px;
+    max-width: 200px;
 }
 
 #modal_submit {
     display:block;
     margin: auto;
+    margin-top: 20px;
     width: 100px;
+    height: 45px;
+}
+
+#writePost {
+    margin-right: 20px;
+    margin-bottom: 20px;
 }
 
 .icon {
     margin-right: 5px;
+    font-size: 1.3em;
 }
