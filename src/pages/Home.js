@@ -21,7 +21,6 @@ const Home = () => {
           <IonLabel class="label">Product Delivery</IonLabel>
         </IonItem>
         </IonList>
-
       </IonContent>
     </IonPage>
   );

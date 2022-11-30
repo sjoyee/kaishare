@@ -109,7 +109,6 @@ const Food = () => {
     };
     console.log(advSearch);
   };
-
   return (
     <IonPage>
       <IonHeader>
@@ -158,7 +157,6 @@ const Food = () => {
             <IonIcon icon={pencil}></IonIcon>
           </IonFabButton>
         </IonFab>
-
         <IonContent className="advanced_search">
           <IonModal id="example-modal" ref={modal} trigger="open-search">
             <IonContent>
