@@ -58,10 +58,9 @@ const WritePost = () => {
         <IonCard>
           <IonCardContent>
             <IonList>
-              <IonItem counter={true}>
+              <IonItem>
                 <IonInput
                   placeholder="Post Title"
-                  maxlength={20}
                   required={true}
                   onIonChange={(e) => {
                     setTitle(e.detail.value);
@@ -74,7 +73,6 @@ const WritePost = () => {
                   placeholder="Post Content"
                   rows={5}
                   autoGrow={true}
-                  maxlength={200}
                   required={true}
                   onIonChange={(e) => {
                     setContent(e.detail.value);

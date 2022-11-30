@@ -58,7 +58,7 @@ const EditPost = () => {
           <IonGrid>
             <IonRow>
               <IonTitle>Edit Event Post</IonTitle>
-              <IonButton type="submit" onClick={saveEditedPost}>
+              <IonButton type="submit" onClick={saveEditedPost} color="success">
                 Save
               </IonButton>
             </IonRow>
@@ -69,11 +69,10 @@ const EditPost = () => {
         <IonCard>
           <IonCardContent>
             <IonList>
-              <IonItem counter={true}>
+              <IonItem>
                 <IonInput
                   placeholder="Post Title"
                   value={title}
-                  maxlength={20}
                   required={true}
                   onIonChange={(e) => {
                     setTitle(e.detail.value);
@@ -81,13 +80,12 @@ const EditPost = () => {
                 ></IonInput>
               </IonItem>
 
-              <IonItem counter={true}>
+              <IonItem>
                 <IonTextarea
                   placeholder="Post Content"
                   value={content}
                   rows={5}
                   autoGrow={true}
-                  maxlength={200}
                   required={true}
                   onIonChange={(e) => {
                     setContent(e.detail.value);
@@ -154,6 +152,11 @@ const EditPost = () => {
                     setPrice(e.detail.value);
                   }}
                 ></IonInput>
+              </IonItem>
+              <IonItem>
+                <IonLabel position="fixed">State</IonLabel>
+                <IonButton>Close</IonButton>
+                <IonButton color="danger">Delete</IonButton>
               </IonItem>
             </IonList>
           </IonCardContent>
