@@ -10,12 +10,11 @@ import {
   setupIonicReact,
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import { home, reader, settings } from "ionicons/icons";
+import { home } from "ionicons/icons";
 import Home from "./pages/Home";
 import Food from "./pages/Food";
 import WritePost from "./pages/WritePost";
 import EditPost from "./pages/EditPost";
-import Tab3 from "./pages/Tab3";
 import DetailPost from "./pages/DetailPost";
 
 /* Core CSS required for Ionic components to work properly */
@@ -56,9 +55,6 @@ const App = () => (
           <Route exact path="/detailpost">
             <DetailPost />
           </Route>
-          <Route path="/tab3">
-            <Tab3 />
-          </Route>
           <Route exact path="/food">
             <Food />
           </Route>
@@ -70,15 +66,6 @@ const App = () => (
           <IonTabButton tab="Home" href="/home">
             <IonIcon icon={home} />
             <IonLabel>Home</IonLabel>
-          </IonTabButton>
-          {/* Might need to add a create button to write new post (navigate to WritePost page) in My Post Page */}
-          <IonTabButton tab="My Post" href="/writepost">
-            <IonIcon icon={reader} />
-            <IonLabel>My Post</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="tab3" href="/tab3">
-            <IonIcon icon={settings} />
-            <IonLabel>Settings</IonLabel>
           </IonTabButton>
         </IonTabBar>
       </IonTabs>
