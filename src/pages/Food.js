@@ -25,6 +25,7 @@ import {
 } from "@ionic/react";
 import { fastFood, filterOutline, pencil } from "ionicons/icons";
 import "./Food.css";
+import Tab from "../components/Tab";
 
 const Food = () => {
   const modal = useRef(null);
@@ -32,19 +33,22 @@ const Food = () => {
   // dummy post list
   const Post1 = {
     writer: "William",
-    title: "abc"
-  }
+    title: "abc",
+  };
   const Post2 = {
     writer: "Kelly",
-    title: "defg"
-  }
+    title: "defg",
+  };
   const [posts, setPosts] = useState([Post1, Post2]);
 
   // show more post lists
-  const addPosts = () => { 
+  const addPosts = () => {
     const newPosts = [];
     for (let i = 0; i < 50; i++) {
-      newPosts.push({writer: `Writer ${1 + posts.length + i}`, title: `Post ${1 + posts.length + i}`});
+      newPosts.push({
+        writer: `Writer ${1 + posts.length + i}`,
+        title: `Post ${1 + posts.length + i}`,
+      });
     }
     setPosts([...posts, ...newPosts]);
   };
@@ -54,7 +58,7 @@ const Food = () => {
 
   const submitNormalSearch = () => {
     const normalSearch = {
-    content: search
+      content: search,
     };
     console.log(normalSearch);
   };
@@ -72,20 +76,21 @@ const Food = () => {
 
   const submitAdvancedSearch = () => {
     const advSearch = {
-    title: title,
-    writer: writer,
-    content: content,
-    product: product,
-    recruitsNo: recruitsNo,
-    datetime: datetime,
-    place: place,
-    price: price,
-    state: state
+      title: title,
+      writer: writer,
+      content: content,
+      product: product,
+      recruitsNo: recruitsNo,
+      datetime: datetime,
+      place: place,
+      price: price,
+      state: state,
     };
     console.log(advSearch);
   };
 
-  const clearAdvancedSearch = () => { // if popup is closed, previous inserted datas are cleared 
+  const clearAdvancedSearch = () => {
+    // if popup is closed, previous inserted datas are cleared
     setTitle([]);
     setWriter([]);
     setContent([]);
@@ -105,7 +110,7 @@ const Food = () => {
       datetime: datetime,
       place: place,
       price: price,
-      state: state
+      state: state,
     };
     console.log(advSearch);
   };
@@ -129,19 +134,23 @@ const Food = () => {
           color="light"
           animated={true}
           placeholder="Search"
-          onIonChange={(e) => {setSearch(e.detail.value)}}
-          onKeyDown={(e) => {if (e.key === 'Enter') submitNormalSearch()}}
+          onIonChange={(e) => {
+            setSearch(e.detail.value);
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") submitNormalSearch();
+          }}
         ></IonSearchbar>
       </IonHeader>
 
       <IonContent>
         <IonList>
-        {posts.map((post) => (
-          <IonItem href="./DetailPost">
-            <IonText id="postWriter">{post.writer}</IonText>
-            <IonText>{post.title}</IonText>
-          </IonItem>
-        ))}
+          {posts.map((post) => (
+            <IonItem href="./DetailPost">
+              <IonText id="postWriter">{post.writer}</IonText>
+              <IonText>{post.title}</IonText>
+            </IonItem>
+          ))}
         </IonList>
         <IonInfiniteScroll
           onIonInfinite={(e) => {
@@ -165,7 +174,10 @@ const Food = () => {
                 <IonButtons slot="end">
                   <IonButton
                     color="warning"
-                    onClick={() => {modal.current?.dismiss(); clearAdvancedSearch()}}
+                    onClick={() => {
+                      modal.current?.dismiss();
+                      clearAdvancedSearch();
+                    }}
                   >
                     Close
                   </IonButton>
@@ -175,72 +187,99 @@ const Food = () => {
               <IonList>
                 <IonItem>
                   <IonLabel position="fixed">Title</IonLabel>
-                  <IonInput onIonChange={(e) => {
-                    setTitle(e.detail.value);
-                  }}></IonInput>
+                  <IonInput
+                    onIonChange={(e) => {
+                      setTitle(e.detail.value);
+                    }}
+                  ></IonInput>
                 </IonItem>
 
                 <IonItem>
                   <IonLabel position="fixed">Writer</IonLabel>
-                  <IonInput onIonChange={(e) => {
-                    setWriter(e.detail.value);
-                  }}></IonInput>
+                  <IonInput
+                    onIonChange={(e) => {
+                      setWriter(e.detail.value);
+                    }}
+                  ></IonInput>
                 </IonItem>
 
                 <IonItem>
                   <IonLabel position="fixed">Content</IonLabel>
-                  <IonInput onIonChange={(e) => {
-                    setContent(e.detail.value);
-                  }}></IonInput>
+                  <IonInput
+                    onIonChange={(e) => {
+                      setContent(e.detail.value);
+                    }}
+                  ></IonInput>
                 </IonItem>
 
                 <IonItem>
                   <IonLabel position="fixed">Product</IonLabel>
-                  <IonInput onIonChange={(e) => {
-                    setProduct(e.detail.value);
-                  }}></IonInput>
+                  <IonInput
+                    onIonChange={(e) => {
+                      setProduct(e.detail.value);
+                    }}
+                  ></IonInput>
                 </IonItem>
 
                 <IonItem>
                   <IonLabel position="fixed">Participants</IonLabel>
-                  <IonInput type="number" onIonChange={(e) => {
-                    setRecruitsNo(e.detail.value);
-                  }}></IonInput>
+                  <IonInput
+                    type="number"
+                    onIonChange={(e) => {
+                      setRecruitsNo(e.detail.value);
+                    }}
+                  ></IonInput>
                 </IonItem>
 
                 <IonItem>
                   <IonLabel position="fixed">Time</IonLabel>
-                  <IonInput type="datetime-local" onIonChange={(e) => {
-                    setDatetime(e.detail.value);
-                  }}></IonInput>
+                  <IonInput
+                    type="datetime-local"
+                    onIonChange={(e) => {
+                      setDatetime(e.detail.value);
+                    }}
+                  ></IonInput>
                 </IonItem>
 
                 <IonItem>
                   <IonLabel position="fixed">Place</IonLabel>
-                  <IonInput onIonChange={(e) => {
-                    setPlace(e.detail.value);
-                  }}></IonInput>
+                  <IonInput
+                    onIonChange={(e) => {
+                      setPlace(e.detail.value);
+                    }}
+                  ></IonInput>
                 </IonItem>
 
                 <IonItem>
                   <IonLabel position="fixed">Price</IonLabel>
-                  <IonInput type="number" onIonChange={(e) => {
-                    setPrice(e.detail.value);
-                  }}></IonInput>
+                  <IonInput
+                    type="number"
+                    onIonChange={(e) => {
+                      setPrice(e.detail.value);
+                    }}
+                  ></IonInput>
                 </IonItem>
 
                 <IonItem>
                   <IonLabel position="fixed">State</IonLabel>
-                  <IonSelect placeholder="Select state" interface="popover" onIonChange={(e) => {
-                    setState(e.detail.value);
-                  }}>
+                  <IonSelect
+                    placeholder="Select state"
+                    interface="popover"
+                    onIonChange={(e) => {
+                      setState(e.detail.value);
+                    }}
+                  >
                     <IonSelectOption value="opened">Opened</IonSelectOption>
                     <IonSelectOption value="closed">Closed</IonSelectOption>
                     <IonSelectOption value="All">All</IonSelectOption>
                   </IonSelect>
                 </IonItem>
 
-                <IonButton id="modal_submit" fill="solid" onClick={submitAdvancedSearch}>
+                <IonButton
+                  id="modal_submit"
+                  fill="solid"
+                  onClick={submitAdvancedSearch}
+                >
                   Search
                 </IonButton>
               </IonList>
@@ -248,6 +287,7 @@ const Food = () => {
           </IonModal>
         </IonContent>
       </IonContent>
+      <Tab />
     </IonPage>
   );
 };

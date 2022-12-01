@@ -17,6 +17,7 @@ import {
 } from "@ionic/react";
 
 import { useState } from "react";
+import Tab from "../components/Tab";
 
 const WritePost = () => {
   const [title, setTitle] = useState("");
@@ -139,6 +140,7 @@ const WritePost = () => {
           </IonCardContent>
         </IonCard>
       </IonContent>
+      <Tab />
     </IonPage>
   );
 };

@@ -17,6 +17,7 @@ import {
 } from "@ionic/react";
 
 import { useState } from "react";
+import Tab from "../components/Tab";
 
 const EditPost = () => {
   //   dummy data
@@ -162,6 +163,7 @@ const EditPost = () => {
           </IonCardContent>
         </IonCard>
       </IonContent>
+      <Tab />
     </IonPage>
   );
 };
