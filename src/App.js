@@ -1,21 +1,13 @@
 import { Redirect, Route } from "react-router-dom";
-import {
-  IonApp,
-  IonIcon,
-  IonLabel,
-  IonRouterOutlet,
-  IonTabBar,
-  IonTabButton,
-  IonTabs,
-  setupIonicReact,
-} from "@ionic/react";
+import { IonApp, IonRouterOutlet, setupIonicReact } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import { home } from "ionicons/icons";
 import Home from "./pages/Home";
 import Food from "./pages/Food";
 import WritePost from "./pages/WritePost";
 import EditPost from "./pages/EditPost";
 import DetailPost from "./pages/DetailPost";
+import Login from "./pages/Login";
+import CreateAccount from "./pages/CreateAccount";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -41,34 +33,40 @@ setupIonicReact();
 const App = () => (
   <IonApp>
     <IonReactRouter>
-      <IonTabs>
-        <IonRouterOutlet>
-          <Route exact path="/home">
-            <Home />
-          </Route>
-          <Route exact path="/writepost">
-            <WritePost />
-          </Route>
-          <Route exact path="/editpost">
-            <EditPost />
-          </Route>
-          <Route exact path="/detailpost">
-            <DetailPost />
-          </Route>
-          <Route exact path="/food">
-            <Food />
-          </Route>
-          <Route exact path="/">
-            <Redirect to="/home" />
-          </Route>
-        </IonRouterOutlet>
-        <IonTabBar slot="bottom">
+      {/* <IonTabs> */}
+      <IonRouterOutlet>
+        <Route exact path="/home">
+          <Home />
+        </Route>
+        <Route exact path="/writepost">
+          <WritePost />
+        </Route>
+        <Route exact path="/editpost">
+          <EditPost />
+        </Route>
+        <Route exact path="/detailpost">
+          <DetailPost />
+        </Route>
+        <Route exact path="/food">
+          <Food />
+        </Route>
+        <Route exact path="/login">
+          <Login />
+        </Route>
+        <Route exact path="/createaccount">
+          <CreateAccount />
+        </Route>
+        <Route exact path="/">
+          <Redirect to="/login" />
+        </Route>
+      </IonRouterOutlet>
+      {/* <IonTabBar slot="bottom">
           <IonTabButton tab="Home" href="/home">
             <IonIcon icon={home} />
             <IonLabel>Home</IonLabel>
           </IonTabButton>
-        </IonTabBar>
-      </IonTabs>
+        </IonTabBar> */}
+      {/* </IonTabs> */}
     </IonReactRouter>
   </IonApp>
 );
