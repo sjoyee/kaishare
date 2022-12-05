@@ -15,9 +15,14 @@ import {
   IonIcon,
   IonFab,
   IonFabButton,
-  IonFabList,
+  IonAlert,
+  IonHeader,
+  IonButtons,
+  IonBackButton,
+  IonTitle,
+  IonToolbar,
 } from "@ionic/react";
-import { ellipsisVertical, paperPlane, trash, create } from "ionicons/icons";
+import { fastFood, paperPlane, trash } from "ionicons/icons";
 import "./DetailPost.css";
 
 import { useState } from "react";
@@ -61,27 +66,19 @@ const DetailPost = () => {
   const commentList = [Comment1, Comment2];
 
   // for create new comment
-  const [newComment, setNewComment] = useState([]);
+  const [newCommentWriter, setNewCommentWriter] = useState([]);
+  const [newCommentContent, setNewCommentContent] = useState([]);
   const submitNewComment = () => {
     const _newComment = {
-      writer: "Elice",
-      comment: newComment,
+      writer: newCommentWriter,
+      comment: newCommentContent,
     };
     console.log(_newComment);
   };
 
-  // for modify comment
-  const [modifyComment, setModifyComment] = useState([]);
-  const submitModifyComment = () => {
-    const _modifyComment = {
-      writer: "Elice",
-      comment: modifyComment,
-    };
-    console.log(_modifyComment);
-  };
-
   // for delete comment
-  const [deleteComment, setDeleteComment] = useState([]);
+  const [deleteCommentAlert, setDeleteCommentAlert] = useState(false);
+  const [deleteComment, setDeleteComment] = useState();
   const submitDeleteComment = () => {
     const _deleteComment = {
       commentId: deleteComment,
@@ -91,6 +88,17 @@ const DetailPost = () => {
 
   return (
     <IonPage>
+      <IonHeader>
+        <IonToolbar>
+          <IonButtons slot="start">
+            <IonBackButton defaultHref="./Food"></IonBackButton>
+          </IonButtons>
+          <IonTitle id="board_title">
+            <IonIcon class="icon" icon={fastFood}></IonIcon>Food Delivery
+          </IonTitle>
+        </IonToolbar>
+      </IonHeader>
+
       <IonContent fullscreen>
         <IonCard>
           <IonCardHeader>
@@ -170,22 +178,32 @@ const DetailPost = () => {
           <IonCardContent>
             <IonList>
               {commentList.map((comment) => (
-                <IonList>
+                <IonList key={comment.commentId}>
                   <IonFab vertical="top" horizontal="end">
-                    <IonFabButton size="small" color="medium" id="commentMenu">
+                    <IonFabButton 
+                      size="small" 
+                      color="medium" 
+                      id="commentMenu"
+                      onClick={() => {
+                        setDeleteCommentAlert(true);
+                        setDeleteComment();
+                        }}>
+                      <IonAlert
+                        isOpen={deleteCommentAlert}
+                        onDidDismiss={() => setDeleteCommentAlert(false)}
+                        header="Delete this comment"
+                        message="Continue?"
+                        buttons={[{
+                          text: 'Cancel'
+                          },
+                          {text: 'Delete',
+                          handler: () => {submitDeleteComment()},
+                        }]}/>
                       <IonIcon
-                        icon={ellipsisVertical}
+                        icon={trash}
                         id="commentIcon"
                       ></IonIcon>
                     </IonFabButton>
-                    <IonFabList side="start">
-                      <IonFabButton size="small">
-                        <IonIcon icon={create}></IonIcon>
-                      </IonFabButton>
-                      <IonFabButton size="small" onClick={submitDeleteComment}>
-                        <IonIcon icon={trash}></IonIcon>
-                      </IonFabButton>
-                    </IonFabList>
                   </IonFab>
                   <h2 id="CommentWriter">{comment.writer}</h2>
                   <IonTextarea
@@ -203,16 +221,25 @@ const DetailPost = () => {
         <IonCard>
           <IonCardContent>
             <IonItem>
+              <IonButton slot="end" fill="clear" onClick={submitNewComment}>
+                <IonIcon icon={paperPlane}></IonIcon>
+              </IonButton>
+              <IonLabel position="floating">Nickname</IonLabel>
+              <IonInput
+                onIonChange={(e) => {
+                  setNewCommentWriter(e.detail.value);
+                  }}>
+              </IonInput>
+            </IonItem>
+            <IonItem>
               <IonTextarea
                 autoGrow={true}
                 rows="1"
                 onIonChange={(e) => {
-                  setNewComment(e.detail.value);
-                }}
-              ></IonTextarea>
-              <IonButton slot="end" fill="clear" onClick={submitNewComment}>
-                <IonIcon icon={paperPlane}></IonIcon>
-              </IonButton>
+                  setNewCommentContent(e.detail.value);
+                }}>
+                <IonLabel position="floating">Comment</IonLabel>
+              </IonTextarea>
             </IonItem>
           </IonCardContent>
         </IonCard>

@@ -23,7 +23,7 @@ import {
   IonFab,
   IonFabButton,
 } from "@ionic/react";
-import { fastFood, filterOutline, pencil } from "ionicons/icons";
+import { fastFood, filterOutline, pencil, search } from "ionicons/icons";
 import "./Food.css";
 import Tab from "../components/Tab";
 
@@ -34,10 +34,12 @@ const Food = () => {
   const Post1 = {
     writer: "William",
     title: "abc",
+    id: "1"
   };
   const Post2 = {
     writer: "Kelly",
     title: "defg",
+    id: "2"
   };
   const [posts, setPosts] = useState([Post1, Post2]);
 
@@ -48,19 +50,20 @@ const Food = () => {
       newPosts.push({
         writer: `Writer ${1 + posts.length + i}`,
         title: `Post ${1 + posts.length + i}`,
+        id: 1 + posts.length + i,
       });
     }
     setPosts([...posts, ...newPosts]);
   };
 
   // for normal search
-  const [search, setSearch] = useState([]);
+  const [normalSearch, setNormalSearch] = useState([]);
 
   const submitNormalSearch = () => {
-    const normalSearch = {
-      content: search,
+    const _normalSearch = {
+      content: normalSearch,
     };
-    console.log(normalSearch);
+    console.log(_normalSearch);
   };
 
   // for advanced search
@@ -130,23 +133,27 @@ const Food = () => {
             </IonButton>
           </IonButtons>
         </IonToolbar>
-        <IonSearchbar
-          color="light"
-          animated={true}
-          placeholder="Search"
-          onIonChange={(e) => {
-            setSearch(e.detail.value);
-          }}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") submitNormalSearch();
-          }}
-        ></IonSearchbar>
+
+        <IonItem>
+          <IonInput 
+            placeholder="Search"
+            onIonChange={(e) => {
+              setNormalSearch(e.detail.value);
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") submitNormalSearch();
+            }}>
+          </IonInput>
+          <IonButton fill="clear" onClick={submitNormalSearch} href="./Search">
+            <IonIcon icon={search} slot="icon-only"></IonIcon>
+          </IonButton>
+        </IonItem>
       </IonHeader>
 
       <IonContent>
         <IonList>
           {posts.map((post) => (
-            <IonItem href="./DetailPost">
+            <IonItem href="./DetailPost" key={post.id}>
               <IonText id="postWriter">{post.writer}</IonText>
               <IonText>{post.title}</IonText>
             </IonItem>
@@ -274,14 +281,14 @@ const Food = () => {
                     <IonSelectOption value="All">All</IonSelectOption>
                   </IonSelect>
                 </IonItem>
-
-                <IonButton
-                  id="modal_submit"
-                  fill="solid"
-                  onClick={submitAdvancedSearch}
-                >
-                  Search
-                </IonButton>
+                  <IonButton
+                    id="modal_submit"
+                    fill="solid"
+                    onClick={submitAdvancedSearch}
+                    href="./Search"
+                  >
+                    Search
+                  </IonButton>
               </IonList>
             </IonContent>
           </IonModal>
