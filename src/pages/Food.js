@@ -7,7 +7,6 @@ import {
   IonToolbar,
   IonButtons,
   IonBackButton,
-  IonSearchbar,
   IonButton,
   IonModal,
   IonList,
@@ -72,7 +71,8 @@ const Food = () => {
   const [content, setContent] = useState([]);
   const [product, setProduct] = useState([]);
   const [recruitsNo, setRecruitsNo] = useState([]);
-  const [datetime, setDatetime] = useState([]);
+  const [datetimeFrom, setDatetimeFrom] = useState([]);
+  const [datetimeTo, setDatetimeTo] = useState([]);
   const [place, setPlace] = useState([]);
   const [price, setPrice] = useState([]);
   const [state, setState] = useState([]);
@@ -84,7 +84,8 @@ const Food = () => {
       content: content,
       product: product,
       recruitsNo: recruitsNo,
-      datetime: datetime,
+      datetimeFrom: datetimeFrom,
+      datetimeTo: datetimeTo,
       place: place,
       price: price,
       state: state,
@@ -99,7 +100,8 @@ const Food = () => {
     setContent([]);
     setProduct([]);
     setRecruitsNo([]);
-    setDatetime([]);
+    setDatetimeFrom([]);
+    setDatetimeTo([]);
     setPlace([]);
     setPrice([]);
     setState([]);
@@ -110,7 +112,8 @@ const Food = () => {
       content: content,
       product: product,
       recruitsNo: recruitsNo,
-      datetime: datetime,
+      datetimeFrom: datetimeFrom,
+      datetimeTo: datetimeTo,
       place: place,
       price: price,
       state: state,
@@ -239,11 +242,21 @@ const Food = () => {
                 </IonItem>
 
                 <IonItem>
-                  <IonLabel position="fixed">Time</IonLabel>
+                  <IonLabel position="fixed">Time (from)</IonLabel>
                   <IonInput
                     type="datetime-local"
                     onIonChange={(e) => {
-                      setDatetime(e.detail.value);
+                      setDatetimeFrom(e.detail.value);
+                    }}
+                  ></IonInput>
+                </IonItem>
+
+                <IonItem>
+                  <IonLabel position="fixed">Time (to)</IonLabel>
+                  <IonInput
+                    type="datetime-local"
+                    onIonChange={(e) => {
+                      setDatetimeTo(e.detail.value);
                     }}
                   ></IonInput>
                 </IonItem>
