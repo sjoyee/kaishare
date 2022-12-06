@@ -26,11 +26,16 @@ import {
 import { fastFood, filterOutline, pencil } from "ionicons/icons";
 import "./Food.css";
 import Tab from "../components/Tab";
+import serverRequest from "../common";
 
 const Food = () => {
   const modal = useRef(null);
 
-  // dummy post list
+  serverRequest("/login/", "POST", {
+    id: "test@kaist.ac.kr",
+    password: "test",
+  }).then((response) => console.log(response));
+
   const Post1 = {
     writer: "William",
     title: "abc",
