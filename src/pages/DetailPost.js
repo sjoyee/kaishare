@@ -169,24 +169,8 @@ const DetailPost = () => {
         <IonCard>
           <IonCardContent>
             <IonList>
-              {commentList.map((comment) => (
-                <IonList>
-                  <IonFab vertical="top" horizontal="end">
-                    <IonFabButton size="small" color="medium" id="commentMenu">
-                      <IonIcon
-                        icon={ellipsisVertical}
-                        id="commentIcon"
-                      ></IonIcon>
-                    </IonFabButton>
-                    <IonFabList side="start">
-                      <IonFabButton size="small">
-                        <IonIcon icon={create}></IonIcon>
-                      </IonFabButton>
-                      <IonFabButton size="small" onClick={submitDeleteComment}>
-                        <IonIcon icon={trash}></IonIcon>
-                      </IonFabButton>
-                    </IonFabList>
-                  </IonFab>
+              {commentList.map((comment, index) => (
+                <IonList key={index}>
                   <h2 id="CommentWriter">{comment.writer}</h2>
                   <IonTextarea
                     value={comment.comment}
