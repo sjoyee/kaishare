@@ -15,6 +15,8 @@ import {
   IonGrid,
   IonRow,
   useIonAlert,
+  IonBackButton,
+  IonButtons,
 } from "@ionic/react";
 
 import { useState } from "react";
@@ -72,12 +74,20 @@ const EditPost = () => {
     console.log("Post is disabled");
   };
 
+  const deletePost = () => {
+    console.log("Post is deleted");
+    window.history.go(-2);
+  };
+
   const [presentAlert] = useIonAlert();
 
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
+          <IonButtons slot="start">
+            <IonBackButton defaultHref="/Food"></IonBackButton>
+          </IonButtons>
           <IonGrid>
             <IonRow>
               <IonTitle>Edit Event Post</IonTitle>
@@ -231,6 +241,29 @@ const EditPost = () => {
                     Close
                   </IonButton>
                 )}
+                <IonButton
+                  color="danger"
+                  onClick={() =>
+                    presentAlert({
+                      header: "Are you sure you want to delete the post?",
+                      buttons: [
+                        {
+                          text: "Cancel",
+                          role: "cancel",
+                        },
+                        {
+                          text: "OK",
+                          role: "confirm",
+                          handler: () => {
+                            deletePost();
+                          },
+                        },
+                      ],
+                    })
+                  }
+                >
+                  Delete
+                </IonButton>
               </IonItem>
             </IonList>
           </IonCardContent>

@@ -14,6 +14,8 @@ import {
   IonButton,
   IonGrid,
   IonRow,
+  IonBackButton,
+  IonButtons,
 } from "@ionic/react";
 
 import { useState } from "react";
@@ -45,6 +47,9 @@ const WritePost = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
+          <IonButtons slot="start">
+            <IonBackButton defaultHref="/Food"></IonBackButton>
+          </IonButtons>
           <IonGrid>
             <IonRow>
               <IonTitle>Write Event Post</IonTitle>
