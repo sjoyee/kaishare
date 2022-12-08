@@ -31,20 +31,29 @@ import serverRequest from "../common";
 const Food = () => {
   const modal = useRef(null);
 
+  const [posts, setPosts] = useState([]);
+
+  function responseToPosts(response) {
+    const newPosts = response.map((post) => {
+      return {
+        writer: post.writer,
+        title: post.title,
+      };
+    });
+
+    if (newPosts.length > posts.length) {
+      setPosts(newPosts);
+    }
+  }
+
   serverRequest("/login/", "POST", {
     id: "test@kaist.ac.kr",
     password: "test",
-  }).then((response) => console.log(response));
+  });
 
-  const Post1 = {
-    writer: "William",
-    title: "abc",
-  };
-  const Post2 = {
-    writer: "Kelly",
-    title: "defg",
-  };
-  const [posts, setPosts] = useState([Post1, Post2]);
+  serverRequest("/post/food/", "GET")
+    .then((r) => r.json())
+    .then((r) => responseToPosts(r));
 
   // show more post lists
   const addPosts = () => {
