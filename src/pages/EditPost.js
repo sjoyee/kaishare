@@ -48,31 +48,81 @@ const EditPost = () => {
   const DISABLED = "disabled";
 
   const saveEditedPost = () => {
-    const post = {
-      title: title,
-      content: content,
-      product: product,
-      capacity: parseInt(capacity),
-      datetime: datetime,
-      place: place,
-      price: parseInt(price),
-    };
-    console.log(post);
-    window.history.back();
+    if(true) {
+      const post = {
+        title: title,
+        content: content,
+        product: product,
+        capacity: parseInt(capacity),
+        datetime: datetime,
+        place: place,
+        price: parseInt(price),
+      };
+      successAlert({
+        header: 'Edit success',
+        buttons: [{
+          text:'OK',
+          handler: () => {
+            console.log(post);
+            window.history.back();
+          }}],
+      });
+    }
+    else {
+      denyAlert({
+        header: 'Access Denied',
+        message: 'You are not the post writer',
+        buttons: ['OK']
+      });
+    }
   };
 
   const closePost = () => {
-    setStatus(CLOSED);
-    console.log("Post is closed");
-    window.history.back();
+    if(true) {
+      successAlert({
+        header: 'Edit success',
+        buttons: [{
+          text:'OK',
+          handler: () => {
+            setStatus(CLOSED);
+            console.log("Post is closed");
+            window.history.back();
+          }}],
+      });
+    }
+    else {
+      denyAlert({
+        header: 'Access Denied',
+        message: 'You are not the post writer',
+        buttons: ['OK']
+      });
+    }
   };
 
   const disablePost = () => {
-    setStatus(DISABLED);
-    console.log("Post is disabled");
+    if(true) {
+      successAlert({
+        header: 'Edit success',
+        buttons: [{
+          text:'OK',
+          handler: () => {
+            setStatus(DISABLED);
+            console.log("Post is disabled");
+          }}],
+      });
+    }
+    else {
+      denyAlert({
+        header: 'Access Denied',
+        message: 'You are not the post writer',
+        buttons: ['OK']
+      });
+    }
   };
 
-  const [presentAlert] = useIonAlert();
+  const [saveAlert] = useIonAlert();
+  const [successAlert] = useIonAlert();
+  const [denyAlert] = useIonAlert();
 
   return (
     <IonPage>
@@ -84,7 +134,7 @@ const EditPost = () => {
               <IonButton
                 type="submit"
                 onClick={() =>
-                  presentAlert({
+                  saveAlert({
                     header: "Are you sure you want to save the changes?",
                     buttons: [
                       {
@@ -210,7 +260,7 @@ const EditPost = () => {
                 ) : (
                   <IonButton
                     onClick={() =>
-                      presentAlert({
+                      saveAlert({
                         header: "Are you sure you want to close the post?",
                         buttons: [
                           {
