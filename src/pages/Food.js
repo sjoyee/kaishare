@@ -34,10 +34,12 @@ const Food = () => {
   const [posts, setPosts] = useState([]);
 
   function responseToPosts(response) {
+    console.log(response);
     const newPosts = response.map((post) => {
       return {
         writer: post.writer,
         title: post.title,
+        pid: post.p_id,
       };
     });
 
@@ -160,7 +162,7 @@ const Food = () => {
       <IonContent>
         <IonList>
           {posts.map((post, index) => (
-            <IonItem href="./DetailPost" key={index}>
+            <IonItem href={`./DetailPost/${post.pid}`} key={index}>
               <IonText id="postWriter">{post.writer}</IonText>
               <IonText>{post.title}</IonText>
             </IonItem>
