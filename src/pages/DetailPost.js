@@ -86,7 +86,7 @@ const DetailPost = () => {
   const [newCommentContent, setNewCommentContent] = useState([]);
   const submitNewComment = () => {
     serverRequest(`/post/food/${id}/comment`, "POST", {
-      nickname: "fixMeComment",
+      nickname: newCommentWriter,
       content: newCommentContent,
     }).then(() => {
       console.log("comment sent");
