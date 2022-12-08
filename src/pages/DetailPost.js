@@ -19,7 +19,7 @@ import {
   IonTitle,
   IonToolbar,
   IonPopover,
-  useIonToast
+  useIonToast,
 } from "@ionic/react";
 import { fastFood, paperPlane } from "ionicons/icons";
 import "./DetailPost.css";
@@ -81,44 +81,6 @@ const DetailPost = () => {
       setComments(newComments);
     });
 
-  /*
-  // dummy post data
-  const ContentPost = {
-    title: "Let's eat!",
-    writer: "Mr.Kim",
-    content: "I want to delivery chicken...\nSo so...\nFinally...",
-    product: "ABC Chicken",
-    recruitsNo: 4,
-    datetime: "2022-11-27T17:00",
-    place: "XYZ dormitory",
-    price: 18000,
-    contactInfo: "kim@kaist.ac.kr",
-  };
-  const title = ContentPost.title;
-  const writer = ContentPost.writer;
-  const content = ContentPost.content;
-  const product = ContentPost.product;
-  const recruitsNo = ContentPost.recruitsNo;
-  const datetime = ContentPost.datetime;
-  const place = ContentPost.place;
-  const price = ContentPost.price;
-  const contactInfo = ContentPost.contactInfo;
-
-  // dummy comment list
-  const Comment1 = {
-    writer: "William",
-    comment:
-      "Hi, everyone!ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
-    commentId: "1",
-  };
-  const Comment2 = {
-    writer: "Kelly",
-    comment: "Nice to meet you!",
-    commentId: "2",
-  };
-  const commentList = [Comment1, Comment2];
-  */
-
   // for create new comment
   const [newCommentWriter, setNewCommentWriter] = useState([]);
   const [newCommentContent, setNewCommentContent] = useState([]);
@@ -143,8 +105,8 @@ const DetailPost = () => {
   };
 
   const [presentToast] = useIonToast();
-  const [handlerMessage, setHandlerMessage] = useState('');
-  const [roleMessage, setRoleMessage] = useState('');
+  const [handlerMessage, setHandlerMessage] = useState("");
+  const [roleMessage, setRoleMessage] = useState("");
 
   return (
     <IonPage>
@@ -158,23 +120,25 @@ const DetailPost = () => {
           </IonTitle>
           <IonButtons slot="end">
             <IonButton
-            onClick={() => {
-              presentToast({
-                message: 'Participate:',
-                duration: 5000,
-                buttons: [
-                  {
-                    text: 'Join',
-                    // handler: () => { setHandlerMessage('More Info clicked'); }
-                  },
-                  {
-                    text: 'Leave',
-                    // handler: () => { setHandlerMessage('Dismiss clicked'); }
-                  }
-                ]
-              })
-            }}
-          >Join</IonButton>
+              onClick={() => {
+                presentToast({
+                  message: "Participate:",
+                  duration: 5000,
+                  buttons: [
+                    {
+                      text: "Join",
+                      // handler: () => { setHandlerMessage('More Info clicked'); }
+                    },
+                    {
+                      text: "Leave",
+                      // handler: () => { setHandlerMessage('Dismiss clicked'); }
+                    },
+                  ],
+                });
+              }}
+            >
+              Join
+            </IonButton>
           </IonButtons>
         </IonToolbar>
       </IonHeader>
@@ -248,11 +212,13 @@ const DetailPost = () => {
                 <IonLabel>
                   <b>Contact Information</b>
                 </IonLabel>
-                <IonButton id="click-trigger" slot="end">Check info</IonButton>
+                <IonButton id="click-trigger" slot="end">
+                  Check info
+                </IonButton>
                 <IonPopover trigger="click-trigger" triggerAction="click">
                   <IonInput value={post.contactInfo} readonly={true}></IonInput>
                 </IonPopover>
-              </IonItem>       
+              </IonItem>
             </IonList>
           </IonCardContent>
         </IonCard>
