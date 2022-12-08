@@ -19,6 +19,8 @@ import {
 } from "@ionic/react";
 
 import { useState } from "react";
+import { useHistory } from "react-router";
+import serverRequest from "../common";
 import Tab from "../components/Tab";
 
 const WritePost = () => {
@@ -29,18 +31,34 @@ const WritePost = () => {
   const [datetime, setDatetime] = useState("");
   const [place, setPlace] = useState("");
   const [price, setPrice] = useState("0");
+  const [nickname, setNickname] = useState("");
+
+  const history = useHistory();
+
+  serverRequest("/login/", "POST", {
+    id: "test@kaist.ac.kr",
+    password: "test",
+  })
+    .then()
+    .then();
 
   const submitPost = () => {
     const post = {
       title: title,
+      nickname: nickname,
       content: content,
       product: product,
-      recruitsNo: parseInt(recruitsNo),
-      datetime: datetime,
+      capacity: parseInt(recruitsNo),
+      time: datetime,
       place: place,
       price: parseInt(price),
     };
     console.log(post);
+
+    serverRequest(`/post/food/`, "POST", post)
+      .then((r) => r.json())
+      .then((r) => console.log(r))
+      .then(() => history.push("/food/"));
   };
 
   return (
@@ -73,7 +91,15 @@ const WritePost = () => {
                   }}
                 ></IonInput>
               </IonItem>
-
+              <IonItem>
+                <IonInput
+                  placeholder="Nickname"
+                  required={true}
+                  onIonChange={(e) => {
+                    setNickname(e.detail.value);
+                  }}
+                ></IonInput>
+              </IonItem>
               <IonItem counter={true}>
                 <IonTextarea
                   placeholder="Post Content"
