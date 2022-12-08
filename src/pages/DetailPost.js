@@ -154,7 +154,7 @@ const DetailPost = () => {
               <IonCardTitle>
                 <IonInput value={post.title} readonly={true}></IonInput>
               </IonCardTitle>
-              <IonButton slot="end" href="/EditPost">
+              <IonButton slot="end" href={`/EditPost/${id}`}>
                 Edit
               </IonButton>
             </IonItem>
