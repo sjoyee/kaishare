@@ -14,43 +14,73 @@ import {
   IonButton,
   IonGrid,
   IonRow,
+  useIonAlert,
+  IonRouterOutlet,
 } from "@ionic/react";
 
 import { useState } from "react";
+import { Redirect } from "react-router";
+import { Route } from "workbox-routing";
 import Tab from "../components/Tab";
+import Food from "./Food";
+
+// post_get(category, nickname, title, content, product, place, status, capacity, price, time_from, time_to)
 
 const EditPost = () => {
   //   dummy data
   const postDetails = {
+    category: "",
+    nickname: "",
     title: "Let's eat!",
     content: "I want to delivery chicken...\nSo so...\nFinally...",
     product: "ABC Chicken",
-    recruitsNo: 4,
-    datetime: "2022-11-27T17:00",
     place: "XYZ dormitory",
+    // active, closed, disabled
+    status: "active",
+    capacity: 4,
     price: 18000,
+    datetime: "2022-11-27T17:00",
   };
 
   const [title, setTitle] = useState(postDetails.title);
   const [content, setContent] = useState(postDetails.content);
   const [product, setProduct] = useState(postDetails.product);
-  const [recruitsNo, setRecruitsNo] = useState(postDetails.recruitsNo);
+  const [capacity, setCapacity] = useState(postDetails.capacity);
   const [datetime, setDatetime] = useState(postDetails.datetime);
   const [place, setPlace] = useState(postDetails.place);
   const [price, setPrice] = useState(postDetails.price);
+  const [status, setStatus] = useState(postDetails.status);
+
+  const ACTIVE = "active";
+  const CLOSED = "closed";
+  const DISABLED = "disabled";
 
   const saveEditedPost = () => {
     const post = {
       title: title,
       content: content,
       product: product,
-      recruitsNo: parseInt(recruitsNo),
+      capacity: parseInt(capacity),
       datetime: datetime,
       place: place,
       price: parseInt(price),
     };
     console.log(post);
+    window.history.back();
   };
+
+  const closePost = () => {
+    setStatus(CLOSED);
+    console.log("Post is closed");
+    window.history.back();
+  };
+
+  const disablePost = () => {
+    setStatus(DISABLED);
+    console.log("Post is disabled");
+  };
+
+  const [presentAlert] = useIonAlert();
 
   return (
     <IonPage>
@@ -59,8 +89,29 @@ const EditPost = () => {
           <IonGrid>
             <IonRow>
               <IonTitle>Edit Event Post</IonTitle>
-              <IonButton type="submit" onClick={saveEditedPost} color="success">
-                Save
+              <IonButton
+                type="submit"
+                onClick={() =>
+                  presentAlert({
+                    header: "Are you sure you want to save the changes?",
+                    buttons: [
+                      {
+                        text: "Cancel",
+                        role: "cancel",
+                      },
+                      {
+                        text: "OK",
+                        role: "confirm",
+                        handler: () => {
+                          saveEditedPost();
+                        },
+                      },
+                    ],
+                  })
+                }
+                color="success"
+              >
+                SAVE
               </IonButton>
             </IonRow>
           </IonGrid>
@@ -110,11 +161,11 @@ const EditPost = () => {
                 <IonInput
                   type="number"
                   placeholder="1"
-                  value={recruitsNo}
+                  value={capacity}
                   min={1}
                   required={true}
                   onIonChange={(e) => {
-                    setRecruitsNo(e.detail.value);
+                    setCapacity(e.detail.value);
                   }}
                 ></IonInput>
               </IonItem>
@@ -155,14 +206,45 @@ const EditPost = () => {
                 ></IonInput>
               </IonItem>
               <IonItem>
-                <IonLabel position="fixed">State</IonLabel>
-                <IonButton>Close</IonButton>
-                <IonButton color="danger">Delete</IonButton>
+                <IonLabel position="fixed">Status</IonLabel>
+                {status === CLOSED ? (
+                  <IonButton
+                    color="light"
+                    href="/Food"
+                    onClick={() => disablePost()}
+                  >
+                    Disable
+                  </IonButton>
+                ) : (
+                  <IonButton
+                    onClick={() =>
+                      presentAlert({
+                        header: "Are you sure you want to close the post?",
+                        buttons: [
+                          {
+                            text: "Cancel",
+                            role: "cancel",
+                          },
+                          {
+                            text: "OK",
+                            role: "confirm",
+                            handler: () => {
+                              closePost();
+                            },
+                          },
+                        ],
+                      })
+                    }
+                  >
+                    Close
+                  </IonButton>
+                )}
               </IonItem>
             </IonList>
           </IonCardContent>
         </IonCard>
       </IonContent>
+
       <Tab />
     </IonPage>
   );
