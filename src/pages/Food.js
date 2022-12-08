@@ -50,7 +50,9 @@ const Food = () => {
   serverRequest("/login/", "POST", {
     id: "test@kaist.ac.kr",
     password: "test",
-  }).then();
+  })
+    .then()
+    .then();
 
   serverRequest("/post/food/", "GET")
     .then((r) => r.json())

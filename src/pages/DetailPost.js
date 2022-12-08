@@ -47,7 +47,9 @@ const DetailPost = () => {
   serverRequest("/login/", "POST", {
     id: "test@kaist.ac.kr",
     password: "test",
-  }).then();
+  })
+    .then()
+    .then();
 
   const [post, setPost] = useState(placeHolder);
   const [comments, setComments] = useState([]);
