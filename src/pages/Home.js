@@ -26,7 +26,7 @@ const Home = () => {
           </IonRow>
         </IonGrid>
 
-        <IonList id="boardList">
+        <IonList id="boardList" lines="full">
           <IonItem class="board">
             <IonIcon class="icon" slot="start" icon={car}></IonIcon>
             <IonLabel class="label">Taxi Pool</IonLabel>
