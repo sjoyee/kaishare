@@ -15,22 +15,14 @@ import {
   IonGrid,
   IonRow,
   useIonAlert,
-  IonRouterOutlet,
 } from "@ionic/react";
 
 import { useState } from "react";
-import { Redirect } from "react-router";
-import { Route } from "workbox-routing";
 import Tab from "../components/Tab";
-import Food from "./Food";
-
-// post_get(category, nickname, title, content, product, place, status, capacity, price, time_from, time_to)
 
 const EditPost = () => {
   //   dummy data
   const postDetails = {
-    category: "",
-    nickname: "",
     title: "Let's eat!",
     content: "I want to delivery chicken...\nSo so...\nFinally...",
     product: "ABC Chicken",
