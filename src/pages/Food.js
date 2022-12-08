@@ -58,7 +58,6 @@ const Food = () => {
     .then((r) => r.json())
     .then((r) => responseToPosts(r));
 
-
   // show more post lists
   const addPosts = () => {
     const newPosts = [];
@@ -155,15 +154,15 @@ const Food = () => {
         </IonToolbar>
 
         <IonItem>
-          <IonInput 
+          <IonInput
             placeholder="Search"
             onIonChange={(e) => {
               setNormalSearch(e.detail.value);
             }}
             onKeyDown={(e) => {
               if (e.key === "Enter") submitNormalSearch();
-            }}>
-          </IonInput>
+            }}
+          ></IonInput>
           <IonButton fill="clear" onClick={submitNormalSearch} href="./Search">
             <IonIcon icon={search} slot="icon-only"></IonIcon>
           </IonButton>
@@ -311,14 +310,14 @@ const Food = () => {
                     <IonSelectOption value="All">All</IonSelectOption>
                   </IonSelect>
                 </IonItem>
-                  <IonButton
-                    id="modal_submit"
-                    fill="solid"
-                    onClick={submitAdvancedSearch}
-                    href="./Search"
-                  >
-                    Search
-                  </IonButton>
+                <IonButton
+                  id="modal_submit"
+                  fill="solid"
+                  onClick={submitAdvancedSearch}
+                  href="./Search"
+                >
+                  Search
+                </IonButton>
               </IonList>
             </IonContent>
           </IonModal>
