@@ -13,16 +13,15 @@ import {
   IonTextarea,
   IonInput,
   IonIcon,
-  IonFab,
-  IonFabButton,
-  IonAlert,
   IonHeader,
   IonButtons,
   IonBackButton,
   IonTitle,
   IonToolbar,
+  IonPopover,
+  useIonToast
 } from "@ionic/react";
-import { fastFood, paperPlane, trash } from "ionicons/icons";
+import { fastFood, paperPlane } from "ionicons/icons";
 import "./DetailPost.css";
 
 import { useState } from "react";
@@ -143,6 +142,10 @@ const DetailPost = () => {
     console.log(_deleteComment);
   };
 
+  const [presentToast] = useIonToast();
+  const [handlerMessage, setHandlerMessage] = useState('');
+  const [roleMessage, setRoleMessage] = useState('');
+
   return (
     <IonPage>
       <IonHeader>
@@ -153,6 +156,26 @@ const DetailPost = () => {
           <IonTitle id="board_title">
             <IonIcon class="icon" icon={fastFood}></IonIcon>Food Delivery
           </IonTitle>
+          <IonButtons slot="end">
+            <IonButton
+            onClick={() => {
+              presentToast({
+                message: 'Participate:',
+                duration: 5000,
+                buttons: [
+                  {
+                    text: 'Join',
+                    // handler: () => { setHandlerMessage('More Info clicked'); }
+                  },
+                  {
+                    text: 'Leave',
+                    // handler: () => { setHandlerMessage('Dismiss clicked'); }
+                  }
+                ]
+              })
+            }}
+          >Join</IonButton>
+          </IonButtons>
         </IonToolbar>
       </IonHeader>
 
@@ -225,8 +248,11 @@ const DetailPost = () => {
                 <IonLabel>
                   <b>Contact Information</b>
                 </IonLabel>
-                <IonInput value={post.contactInfo} readonly={true}></IonInput>
-              </IonItem>
+                <IonButton id="click-trigger" slot="end">Check info</IonButton>
+                <IonPopover trigger="click-trigger" triggerAction="click">
+                  <IonInput value={post.contactInfo} readonly={true}></IonInput>
+                </IonPopover>
+              </IonItem>       
             </IonList>
           </IonCardContent>
         </IonCard>
