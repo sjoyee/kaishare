@@ -49,7 +49,7 @@ const Food = () => {
   serverRequest("/login/", "POST", {
     id: "test@kaist.ac.kr",
     password: "test",
-  });
+  }).then();
 
   serverRequest("/post/food/", "GET")
     .then((r) => r.json())
