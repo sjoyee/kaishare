@@ -38,7 +38,6 @@ const placeHolder = {
   datetime: "",
   place: "",
   price: 1,
-  contactInfo: "",
 };
 
 const DetailPost = () => {
@@ -53,6 +52,7 @@ const DetailPost = () => {
 
   const [post, setPost] = useState(placeHolder);
   const [comments, setComments] = useState([]);
+  const [contactMessage, setContactMessage] = useState("");
 
   serverRequest(`/post/food/${id}`, "GET")
     .then((r) => r.json())
@@ -69,7 +69,6 @@ const DetailPost = () => {
         datetime: r.time,
         place: r.place,
         price: r.price,
-        contactInfo: "fixme",
       };
       setPost(newPost);
 
@@ -81,6 +80,19 @@ const DetailPost = () => {
       });
 
       setComments(newComments);
+    });
+  serverRequest(`/post/food/${id}/share`, "GET")
+    .then((r) => r.json())
+    .then((r) => {
+      if (r == "Only closed event can see the information.")
+        setContactMessage(r);
+      else {
+        setContactMessage(
+          r.map((contact) => {
+            return `${contact.id} ${contact.phone}\n`;
+          })
+        );
+      }
     });
 
   // for create new comment
@@ -220,7 +232,7 @@ const DetailPost = () => {
                   Check info
                 </IonButton>
                 <IonPopover trigger="click-trigger" triggerAction="click">
-                  <IonInput value={post.contactInfo} readonly={true}></IonInput>
+                  <IonContent>{contactMessage}</IonContent>
                 </IonPopover>
               </IonItem>
             </IonList>
