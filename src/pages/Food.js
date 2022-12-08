@@ -7,7 +7,6 @@ import {
   IonToolbar,
   IonButtons,
   IonBackButton,
-  IonSearchbar,
   IonButton,
   IonModal,
   IonList,
@@ -23,7 +22,7 @@ import {
   IonFab,
   IonFabButton,
 } from "@ionic/react";
-import { fastFood, filterOutline, pencil } from "ionicons/icons";
+import { fastFood, filterOutline, pencil, search } from "ionicons/icons";
 import "./Food.css";
 import Tab from "../components/Tab";
 import serverRequest from "../common";
@@ -57,6 +56,7 @@ const Food = () => {
     .then((r) => r.json())
     .then((r) => responseToPosts(r));
 
+
   // show more post lists
   const addPosts = () => {
     const newPosts = [];
@@ -64,19 +64,20 @@ const Food = () => {
       newPosts.push({
         writer: `Writer ${1 + posts.length + i}`,
         title: `Post ${1 + posts.length + i}`,
+        id: 1 + posts.length + i,
       });
     }
     setPosts([...posts, ...newPosts]);
   };
 
   // for normal search
-  const [search, setSearch] = useState([]);
+  const [normalSearch, setNormalSearch] = useState([]);
 
   const submitNormalSearch = () => {
-    const normalSearch = {
-      content: search,
+    const _normalSearch = {
+      content: normalSearch,
     };
-    console.log(normalSearch);
+    console.log(_normalSearch);
   };
 
   // for advanced search
@@ -85,7 +86,8 @@ const Food = () => {
   const [content, setContent] = useState([]);
   const [product, setProduct] = useState([]);
   const [recruitsNo, setRecruitsNo] = useState([]);
-  const [datetime, setDatetime] = useState([]);
+  const [datetimeFrom, setDatetimeFrom] = useState([]);
+  const [datetimeTo, setDatetimeTo] = useState([]);
   const [place, setPlace] = useState([]);
   const [price, setPrice] = useState([]);
   const [state, setState] = useState([]);
@@ -97,7 +99,8 @@ const Food = () => {
       content: content,
       product: product,
       recruitsNo: recruitsNo,
-      datetime: datetime,
+      datetimeFrom: datetimeFrom,
+      datetimeTo: datetimeTo,
       place: place,
       price: price,
       state: state,
@@ -112,7 +115,8 @@ const Food = () => {
     setContent([]);
     setProduct([]);
     setRecruitsNo([]);
-    setDatetime([]);
+    setDatetimeFrom([]);
+    setDatetimeTo([]);
     setPlace([]);
     setPrice([]);
     setState([]);
@@ -123,7 +127,8 @@ const Food = () => {
       content: content,
       product: product,
       recruitsNo: recruitsNo,
-      datetime: datetime,
+      datetimeFrom: datetimeFrom,
+      datetimeTo: datetimeTo,
       place: place,
       price: price,
       state: state,
@@ -146,17 +151,21 @@ const Food = () => {
             </IonButton>
           </IonButtons>
         </IonToolbar>
-        <IonSearchbar
-          color="light"
-          animated={true}
-          placeholder="Search"
-          onIonChange={(e) => {
-            setSearch(e.detail.value);
-          }}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") submitNormalSearch();
-          }}
-        ></IonSearchbar>
+
+        <IonItem>
+          <IonInput 
+            placeholder="Search"
+            onIonChange={(e) => {
+              setNormalSearch(e.detail.value);
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") submitNormalSearch();
+            }}>
+          </IonInput>
+          <IonButton fill="clear" onClick={submitNormalSearch} href="./Search">
+            <IonIcon icon={search} slot="icon-only"></IonIcon>
+          </IonButton>
+        </IonItem>
       </IonHeader>
 
       <IonContent>
@@ -248,11 +257,21 @@ const Food = () => {
                 </IonItem>
 
                 <IonItem>
-                  <IonLabel position="fixed">Time</IonLabel>
+                  <IonLabel position="fixed">Time (from)</IonLabel>
                   <IonInput
                     type="datetime-local"
                     onIonChange={(e) => {
-                      setDatetime(e.detail.value);
+                      setDatetimeFrom(e.detail.value);
+                    }}
+                  ></IonInput>
+                </IonItem>
+
+                <IonItem>
+                  <IonLabel position="fixed">Time (to)</IonLabel>
+                  <IonInput
+                    type="datetime-local"
+                    onIonChange={(e) => {
+                      setDatetimeTo(e.detail.value);
                     }}
                   ></IonInput>
                 </IonItem>
@@ -290,14 +309,14 @@ const Food = () => {
                     <IonSelectOption value="All">All</IonSelectOption>
                   </IonSelect>
                 </IonItem>
-
-                <IonButton
-                  id="modal_submit"
-                  fill="solid"
-                  onClick={submitAdvancedSearch}
-                >
-                  Search
-                </IonButton>
+                  <IonButton
+                    id="modal_submit"
+                    fill="solid"
+                    onClick={submitAdvancedSearch}
+                    href="./Search"
+                  >
+                    Search
+                  </IonButton>
               </IonList>
             </IonContent>
           </IonModal>

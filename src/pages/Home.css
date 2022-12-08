@@ -1,12 +1,11 @@
 #boardList {
-    margin-top: 40%;
-    margin-bottom: 40%;
+    margin-top: 250px;
 }
 
 .board {
-    margin-top: 10%;
-    margin-bottom: 10%;
-    font-size: 5vw;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    font-size: 1.5em;
 }
 .icon {
     display: inline-block;
@@ -15,5 +14,5 @@
     font-size: 200%;
 }
 .label {
-    margin-left: 5vw;
+    margin-left: 1em;
 }

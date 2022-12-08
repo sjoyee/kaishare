@@ -3,6 +3,7 @@ import { IonApp, IonRouterOutlet, setupIonicReact } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import Home from "./pages/Home";
 import Food from "./pages/Food";
+import Search from "./pages/Search";
 import WritePost from "./pages/WritePost";
 import EditPost from "./pages/EditPost";
 import DetailPost from "./pages/DetailPost";
@@ -49,6 +50,9 @@ const App = () => (
         </Route>
         <Route exact path="/food">
           <Food />
+        </Route>
+        <Route exact path="/search">
+          <Search />
         </Route>
         <Route exact path="/login">
           <Login />
