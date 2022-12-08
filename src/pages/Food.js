@@ -159,8 +159,8 @@ const Food = () => {
 
       <IonContent>
         <IonList>
-          {posts.map((post) => (
-            <IonItem href="./DetailPost">
+          {posts.map((post, index) => (
+            <IonItem href="./DetailPost" key={index}>
               <IonText id="postWriter">{post.writer}</IonText>
               <IonText>{post.title}</IonText>
             </IonItem>
