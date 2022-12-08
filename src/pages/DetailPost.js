@@ -124,10 +124,9 @@ const DetailPost = () => {
   const [newCommentWriter, setNewCommentWriter] = useState([]);
   const [newCommentContent, setNewCommentContent] = useState([]);
   const submitNewComment = () => {
-
     serverRequest(`/post/food/${id}/comment`, "POST", {
       nickname: "fixMeComment",
-      content: newComment,
+      content: newCommentContent,
     }).then(() => {
       console.log("comment sent");
       window.location.reload();
@@ -149,7 +148,7 @@ const DetailPost = () => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="./Food"></IonBackButton>
+            <IonBackButton defaultHref="/Food"></IonBackButton>
           </IonButtons>
           <IonTitle id="board_title">
             <IonIcon class="icon" icon={fastFood}></IonIcon>Food Delivery
@@ -164,7 +163,7 @@ const DetailPost = () => {
               <IonCardTitle>
                 <IonInput value={post.title} readonly={true}></IonInput>
               </IonCardTitle>
-              <IonButton slot="end" href="./EditPost">
+              <IonButton slot="end" href="/EditPost">
                 Edit
               </IonButton>
             </IonItem>
@@ -260,8 +259,8 @@ const DetailPost = () => {
               <IonInput
                 onIonChange={(e) => {
                   setNewCommentWriter(e.detail.value);
-                  }}>
-              </IonInput>
+                }}
+              ></IonInput>
             </IonItem>
             <IonItem>
               <IonTextarea
@@ -269,7 +268,8 @@ const DetailPost = () => {
                 rows="1"
                 onIonChange={(e) => {
                   setNewCommentContent(e.detail.value);
-                }}>
+                }}
+              >
                 <IonLabel position="floating">Comment</IonLabel>
               </IonTextarea>
             </IonItem>
