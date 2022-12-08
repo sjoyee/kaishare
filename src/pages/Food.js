@@ -36,7 +36,7 @@ const Food = () => {
     console.log(response);
     const newPosts = response.map((post) => {
       return {
-        writer: post.writer,
+        writer: post.nickname,
         title: post.title,
         pid: post.p_id,
       };
