@@ -50,6 +50,7 @@ const DetailPost = () => {
     .then((r) => {
       if (post != placeHolder) return;
       console.log(r);
+
       const newPost = {
         title: r.title,
         writer: r.nickname,
@@ -62,6 +63,15 @@ const DetailPost = () => {
         contactInfo: "fixme",
       };
       setPost(newPost);
+
+      const newComments = r.comments.map((comment) => {
+        return {
+          writer: comment.nickname,
+          content: comment.content,
+        };
+      });
+
+      setComments(newComments);
     });
 
   /*
@@ -105,11 +115,13 @@ const DetailPost = () => {
   // for create new comment
   const [newComment, setNewComment] = useState([]);
   const submitNewComment = () => {
-    const _newComment = {
-      writer: "Elice",
-      comment: newComment,
-    };
-    console.log(_newComment);
+    serverRequest(`/post/food/${id}/comment`, "POST", {
+      nickname: "fixMeComment",
+      content: newComment,
+    }).then(() => {
+      console.log("comment sent");
+      window.location.reload();
+    });
   };
 
   return (
@@ -196,7 +208,7 @@ const DetailPost = () => {
                 <IonList key={index}>
                   <h2 id="CommentWriter">{comment.writer}</h2>
                   <IonTextarea
-                    value={comment.comment}
+                    value={comment.content}
                     readonly={true}
                     autoGrow={true}
                     rows="1"
