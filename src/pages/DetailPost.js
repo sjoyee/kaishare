@@ -30,15 +30,15 @@ import serverRequest from "../common";
 import { useParams } from "react-router";
 
 const placeHolder = {
-  title: "Let's eat!",
-  writer: "Mr.Kim",
-  content: "I want to delivery chicken...\nSo so...\nFinally...",
-  product: "ABC Chicken",
-  recruitsNo: 4,
-  datetime: "2022-11-27T17:00",
-  place: "XYZ dormitory",
-  price: 18000,
-  contactInfo: "kim@kaist.ac.kr",
+  title: "",
+  writer: "",
+  content: "",
+  product: "",
+  recruitsNo: 1,
+  datetime: "",
+  place: "",
+  price: 1,
+  contactInfo: "",
 };
 
 const DetailPost = () => {
