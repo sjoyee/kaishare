@@ -90,10 +90,12 @@ const DetailPost = () => {
     serverRequest(`/post/food/${id}/comment`, "POST", {
       nickname: newCommentWriter,
       content: newCommentContent,
-    }).then(() => {
-      console.log("comment sent");
-      window.location.reload();
-    });
+    })
+      .then((r) => r.json())
+      .then((r) => {
+        console.log(r);
+        window.location.reload();
+      });
   };
 
   // for delete comment
