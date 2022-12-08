@@ -81,6 +81,7 @@ const DetailPost = () => {
 
       setComments(newComments);
     });
+  /*
   serverRequest(`/post/food/${id}/share`, "GET")
     .then((r) => r.json())
     .then((r) => {
@@ -94,6 +95,7 @@ const DetailPost = () => {
         );
       }
     });
+    */
 
   // for create new comment
   const [newCommentWriter, setNewCommentWriter] = useState([]);
