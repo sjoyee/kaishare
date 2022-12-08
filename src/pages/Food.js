@@ -25,22 +25,37 @@ import {
 import { fastFood, filterOutline, pencil, search } from "ionicons/icons";
 import "./Food.css";
 import Tab from "../components/Tab";
+import serverRequest from "../common";
 
 const Food = () => {
   const modal = useRef(null);
 
-  // dummy post list
-  const Post1 = {
-    writer: "William",
-    title: "abc",
-    id: "1"
-  };
-  const Post2 = {
-    writer: "Kelly",
-    title: "defg",
-    id: "2"
-  };
-  const [posts, setPosts] = useState([Post1, Post2]);
+  const [posts, setPosts] = useState([]);
+
+  function responseToPosts(response) {
+    console.log(response);
+    const newPosts = response.map((post) => {
+      return {
+        writer: post.writer,
+        title: post.title,
+        pid: post.p_id,
+      };
+    });
+
+    if (newPosts.length > posts.length) {
+      setPosts(newPosts);
+    }
+  }
+
+  serverRequest("/login/", "POST", {
+    id: "test@kaist.ac.kr",
+    password: "test",
+  }).then();
+
+  serverRequest("/post/food/", "GET")
+    .then((r) => r.json())
+    .then((r) => responseToPosts(r));
+
 
   // show more post lists
   const addPosts = () => {
@@ -155,8 +170,8 @@ const Food = () => {
 
       <IonContent>
         <IonList>
-          {posts.map((post) => (
-            <IonItem href="./DetailPost" key={post.id}>
+          {posts.map((post, index) => (
+            <IonItem href={`./DetailPost/${post.pid}`} key={index}>
               <IonText id="postWriter">{post.writer}</IonText>
               <IonText>{post.title}</IonText>
             </IonItem>
