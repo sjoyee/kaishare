@@ -13,11 +13,8 @@ import {
   IonTextarea,
   IonInput,
   IonIcon,
-  IonFab,
-  IonFabButton,
-  IonFabList,
 } from "@ionic/react";
-import { ellipsisVertical, paperPlane, trash, create } from "ionicons/icons";
+import { paperPlane } from "ionicons/icons";
 import "./DetailPost.css";
 
 import { useState } from "react";
