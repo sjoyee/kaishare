@@ -11,6 +11,8 @@ import {
   IonText,
 } from "@ionic/react";
 import React, { useState } from "react";
+import { useHistory } from "react-router";
+import serverRequest from "../common";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -18,6 +20,8 @@ const Login = () => {
 
   const [isValidEmail, setIsValidEmail] = useState(undefined);
   const [isValidPassword, setIsValidPassword] = useState(undefined);
+
+  const history = useHistory();
 
   const validateEmailFormat = (email) => {
     return email.match(/^[a-z0-9]+@kaist\.ac\.kr$/);
@@ -42,10 +46,13 @@ const Login = () => {
   };
 
   const login = () => {
-    console.log({
-      email: email,
+    serverRequest("/login/", "POST", {
+      id: email,
       password: password,
-    });
+    })
+      .then((r) => r.json())
+      .then((r) => console.log(r))
+      .then(() => history.push("/home/"));
   };
 
   return (
@@ -114,7 +121,7 @@ const Login = () => {
                 Log In
               </IonButton>
             ) : (
-              <IonButton expand="block" onClick={login} href="/home">
+              <IonButton expand="block" onClick={login}>
                 Log In
               </IonButton>
             )}
