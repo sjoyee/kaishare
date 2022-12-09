@@ -35,9 +35,12 @@ const placeHolder = {
   content: "",
   product: "",
   recruitsNo: 1,
+  joins: 1,
   datetime: "",
   place: "",
   price: 1,
+  joined: false,
+  poster: false,
 };
 
 const DetailPost = () => {
@@ -59,9 +62,12 @@ const DetailPost = () => {
         content: r.content,
         product: r.product,
         recruitsNo: r.capacity,
+        joins: r.joins,
         datetime: r.time,
         place: r.place,
         price: r.price,
+        joined: r.joined,
+        poster: r.poster,
       };
       setPost(newPost);
 
@@ -161,9 +167,11 @@ const DetailPost = () => {
               <IonCardTitle>
                 <IonInput value={post.title} readonly={true}></IonInput>
               </IonCardTitle>
-              <IonButton slot="end" href={`/EditPost/${id}`}>
-                Edit
-              </IonButton>
+              {post.poster ? (
+                <IonButton slot="end" href={`/EditPost/${id}`}>
+                  Edit
+                </IonButton>
+              ) : null}
             </IonItem>
             <IonItem lines="none">
               <IonCardSubtitle>
@@ -211,25 +219,28 @@ const DetailPost = () => {
                 </IonLabel>
                 <IonInput value={post.price} readonly={true}></IonInput>
               </IonItem>
-
               <IonItem lines="none">
                 <IonLabel>
                   <b>Participants</b>
                 </IonLabel>
-                <IonInput value={post.recruitsNo} readonly={true}></IonInput>
+                <IonInput
+                  value={`${post.joins} / ${post.recruitsNo}`}
+                  readonly={true}
+                ></IonInput>
               </IonItem>
-
-              <IonItem lines="none">
-                <IonLabel>
-                  <b>Contact Information</b>
-                </IonLabel>
-                <IonButton id="click-trigger" slot="end">
-                  Check info
-                </IonButton>
-                <IonPopover trigger="click-trigger" triggerAction="click">
-                  <IonContent>{contactMessage}</IonContent>
-                </IonPopover>
-              </IonItem>
+              {post.joined || post.poster ? (
+                <IonItem lines="none">
+                  <IonLabel>
+                    <b>Contact Information</b>
+                  </IonLabel>
+                  <IonButton id="click-trigger" slot="end">
+                    Check info
+                  </IonButton>
+                  <IonPopover trigger="click-trigger" triggerAction="click">
+                    <IonContent>{contactMessage}</IonContent>
+                  </IonPopover>
+                </IonItem>
+              ) : null}
             </IonList>
           </IonCardContent>
         </IonCard>
