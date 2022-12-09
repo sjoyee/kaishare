@@ -69,5 +69,6 @@
     "@capacitor/cli": "4.4.0",
     "react-scripts": "5.0.1"
   },
-  "description": "An Ionic project"
+  "description": "An Ionic project",
+  "proxy": "https://10x53vstw6.execute-api.ap-northeast-2.amazonaws.com/production"
 }

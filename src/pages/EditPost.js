@@ -20,30 +20,39 @@ import {
 } from "@ionic/react";
 
 import { useState } from "react";
+import { useHistory, useParams } from "react-router";
+import serverRequest from "../common";
 import Tab from "../components/Tab";
 
 const EditPost = () => {
-  //   dummy data
-  const postDetails = {
-    title: "Let's eat!",
-    content: "I want to delivery chicken...\nSo so...\nFinally...",
-    product: "ABC Chicken",
-    place: "XYZ dormitory",
-    // active, closed, disabled
-    status: "active",
-    capacity: 4,
-    price: 18000,
-    datetime: "2022-11-27T17:00",
-  };
+  const { id } = useParams();
 
-  const [title, setTitle] = useState(postDetails.title);
-  const [content, setContent] = useState(postDetails.content);
-  const [product, setProduct] = useState(postDetails.product);
-  const [capacity, setCapacity] = useState(postDetails.capacity);
-  const [datetime, setDatetime] = useState(postDetails.datetime);
-  const [place, setPlace] = useState(postDetails.place);
-  const [price, setPrice] = useState(postDetails.price);
-  const [status, setStatus] = useState(postDetails.status);
+  const history = useHistory();
+
+  serverRequest(`/post/food/${id}`, "GET")
+    .then((r) => r.json())
+    .then((r) => {
+      if (content != "") return;
+      console.log(r);
+      setTitle(r.title);
+      //writer: r.nickname,
+      setContent(r.content);
+      setProduct(r.product);
+      setCapacity(r.capacity);
+      setDatetime(r.time);
+      setPlace(r.place);
+      setPrice(r.price);
+      setStatus(r.status);
+    });
+
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [product, setProduct] = useState("");
+  const [capacity, setCapacity] = useState("");
+  const [datetime, setDatetime] = useState("");
+  const [place, setPlace] = useState("");
+  const [price, setPrice] = useState(0);
+  const [status, setStatus] = useState("active");
 
   const ACTIVE = "active";
   const CLOSED = "closed";
@@ -65,18 +74,25 @@ const EditPost = () => {
 
   const closePost = () => {
     setStatus(CLOSED);
-    console.log("Post is closed");
-    window.history.back();
+    serverRequest(`/post/food/${id}/close`, "PATCH")
+      .then((r) => r.json())
+      .then((r) => console.log(r))
+      .then(() => window.history.back());
   };
 
   const disablePost = () => {
     setStatus(DISABLED);
-    console.log("Post is disabled");
+    serverRequest(`/post/food/${id}/disable`, "PATCH")
+      .then((r) => r.json())
+      .then((r) => console.log(r))
+      .then(() => window.history.back());
   };
 
   const deletePost = () => {
-    console.log("Post is deleted");
-    window.history.go(-2);
+    serverRequest(`/post/food/${id}`, "DELETE")
+      .then((r) => r.json())
+      .then((r) => console.log(r))
+      .then(() => history.push("/food/"));
   };
 
   const [presentAlert] = useIonAlert();

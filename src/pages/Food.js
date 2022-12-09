@@ -22,7 +22,7 @@ import {
   IonFab,
   IonFabButton,
 } from "@ionic/react";
-import { fastFood, filterOutline, pencil, search } from "ionicons/icons";
+import { fastFood, pencil, search } from "ionicons/icons";
 import "./Food.css";
 import Tab from "../components/Tab";
 import serverRequest from "../common";
@@ -36,7 +36,7 @@ const Food = () => {
     console.log(response);
     const newPosts = response.map((post) => {
       return {
-        writer: post.writer,
+        writer: post.nickname,
         title: post.title,
         pid: post.p_id,
       };
@@ -47,15 +47,9 @@ const Food = () => {
     }
   }
 
-  serverRequest("/login/", "POST", {
-    id: "test@kaist.ac.kr",
-    password: "test",
-  }).then();
-
   serverRequest("/post/food/", "GET")
     .then((r) => r.json())
     .then((r) => responseToPosts(r));
-
 
   // show more post lists
   const addPosts = () => {
@@ -68,16 +62,6 @@ const Food = () => {
       });
     }
     setPosts([...posts, ...newPosts]);
-  };
-
-  // for normal search
-  const [normalSearch, setNormalSearch] = useState([]);
-
-  const submitNormalSearch = () => {
-    const _normalSearch = {
-      content: normalSearch,
-    };
-    console.log(_normalSearch);
   };
 
   // for advanced search
@@ -147,25 +131,10 @@ const Food = () => {
           </IonTitle>
           <IonButtons slot="end">
             <IonButton id="open-search">
-              <IonIcon slot="icon-only" icon={filterOutline}></IonIcon>
+              <IonIcon slot="icon-only" icon={search}></IonIcon>
             </IonButton>
           </IonButtons>
         </IonToolbar>
-
-        <IonItem>
-          <IonInput 
-            placeholder="Search"
-            onIonChange={(e) => {
-              setNormalSearch(e.detail.value);
-            }}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") submitNormalSearch();
-            }}>
-          </IonInput>
-          <IonButton fill="clear" onClick={submitNormalSearch} href="./Search">
-            <IonIcon icon={search} slot="icon-only"></IonIcon>
-          </IonButton>
-        </IonItem>
       </IonHeader>
 
       <IonContent>
@@ -195,7 +164,7 @@ const Food = () => {
           <IonModal id="example-modal" ref={modal} trigger="open-search">
             <IonContent>
               <IonToolbar>
-                <IonTitle id="modal_title">Advanced Search</IonTitle>
+                <IonTitle id="modal_title">Search</IonTitle>
                 <IonButtons slot="end">
                   <IonButton
                     color="warning"
@@ -309,14 +278,14 @@ const Food = () => {
                     <IonSelectOption value="All">All</IonSelectOption>
                   </IonSelect>
                 </IonItem>
-                  <IonButton
-                    id="modal_submit"
-                    fill="solid"
-                    onClick={submitAdvancedSearch}
-                    href="./Search"
-                  >
-                    Search
-                  </IonButton>
+                <IonButton
+                  id="modal_submit"
+                  fill="solid"
+                  onClick={submitAdvancedSearch}
+                  href="./Search"
+                >
+                  Search
+                </IonButton>
               </IonList>
             </IonContent>
           </IonModal>

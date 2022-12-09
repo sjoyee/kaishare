@@ -19,7 +19,7 @@ import {
   IonTitle,
   IonToolbar,
   IonPopover,
-  useIonToast
+  useIonToast,
 } from "@ionic/react";
 import { fastFood, paperPlane } from "ionicons/icons";
 import "./DetailPost.css";
@@ -30,27 +30,27 @@ import serverRequest from "../common";
 import { useParams } from "react-router";
 
 const placeHolder = {
-  title: "Let's eat!",
-  writer: "Mr.Kim",
-  content: "I want to delivery chicken...\nSo so...\nFinally...",
-  product: "ABC Chicken",
-  recruitsNo: 4,
-  datetime: "2022-11-27T17:00",
-  place: "XYZ dormitory",
-  price: 18000,
-  contactInfo: "kim@kaist.ac.kr",
+  title: "",
+  writer: "",
+  content: "",
+  product: "",
+  recruitsNo: 1,
+  joins: 1,
+  datetime: "",
+  place: "",
+  price: 1,
+  joined: false,
+  poster: false,
 };
 
 const DetailPost = () => {
   const { id } = useParams();
 
-  serverRequest("/login/", "POST", {
-    id: "test@kaist.ac.kr",
-    password: "test",
-  }).then();
-
   const [post, setPost] = useState(placeHolder);
   const [comments, setComments] = useState([]);
+  const [contactMessage, setContactMessage] = useState(
+    "cannot find contact info"
+  );
 
   serverRequest(`/post/food/${id}`, "GET")
     .then((r) => r.json())
@@ -64,10 +64,12 @@ const DetailPost = () => {
         content: r.content,
         product: r.product,
         recruitsNo: r.capacity,
+        joins: r.joins,
         datetime: r.time,
         place: r.place,
         price: r.price,
-        contactInfo: "fixme",
+        joined: r.joined,
+        poster: r.poster,
       };
       setPost(newPost);
 
@@ -80,57 +82,60 @@ const DetailPost = () => {
 
       setComments(newComments);
     });
-
   /*
-  // dummy post data
-  const ContentPost = {
-    title: "Let's eat!",
-    writer: "Mr.Kim",
-    content: "I want to delivery chicken...\nSo so...\nFinally...",
-    product: "ABC Chicken",
-    recruitsNo: 4,
-    datetime: "2022-11-27T17:00",
-    place: "XYZ dormitory",
-    price: 18000,
-    contactInfo: "kim@kaist.ac.kr",
-  };
-  const title = ContentPost.title;
-  const writer = ContentPost.writer;
-  const content = ContentPost.content;
-  const product = ContentPost.product;
-  const recruitsNo = ContentPost.recruitsNo;
-  const datetime = ContentPost.datetime;
-  const place = ContentPost.place;
-  const price = ContentPost.price;
-  const contactInfo = ContentPost.contactInfo;
-
-  // dummy comment list
-  const Comment1 = {
-    writer: "William",
-    comment:
-      "Hi, everyone!ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
-    commentId: "1",
-  };
-  const Comment2 = {
-    writer: "Kelly",
-    comment: "Nice to meet you!",
-    commentId: "2",
-  };
-  const commentList = [Comment1, Comment2];
-  */
+  serverRequest(`/post/food/${id}/share`, "GET")
+    .then((r) => r.json())
+    .then((r) => {
+      if (r == "Only closed event can see the information.")
+        setContactMessage(r);
+      else {
+        setContactMessage(
+          r.map((contact) => {
+            return `${contact.id} ${contact.phone}\n`;
+          })
+        );
+      }
+    });
+    */
 
   // for create new comment
   const [newCommentWriter, setNewCommentWriter] = useState([]);
   const [newCommentContent, setNewCommentContent] = useState([]);
   const submitNewComment = () => {
     serverRequest(`/post/food/${id}/comment`, "POST", {
-      nickname: "fixMeComment",
+      nickname: newCommentWriter,
       content: newCommentContent,
-    }).then(() => {
-      console.log("comment sent");
-      window.location.reload();
-    });
+    })
+      .then((r) => r.json())
+      .then((r) => {
+        console.log(r);
+        window.location.reload();
+      });
   };
+
+  function onClickJoin() {
+    serverRequest(`/post/food/${id}/join`, "POST", {
+      category: "food",
+      p_id: id,
+    })
+      .then((r) => r.json())
+      .then((r) => {
+        console.log(r);
+        window.location.reload();
+      });
+  }
+
+  function onClickLeave() {
+    serverRequest(`/post/food/${id}/leave`, "POST", {
+      category: "food",
+      p_id: id,
+    })
+      .then((r) => r.json())
+      .then((r) => {
+        console.log(r);
+        window.location.reload();
+      });
+  }
 
   // for delete comment
   const [deleteCommentAlert, setDeleteCommentAlert] = useState(false);
@@ -143,8 +148,8 @@ const DetailPost = () => {
   };
 
   const [presentToast] = useIonToast();
-  const [handlerMessage, setHandlerMessage] = useState('');
-  const [roleMessage, setRoleMessage] = useState('');
+  const [handlerMessage, setHandlerMessage] = useState("");
+  const [roleMessage, setRoleMessage] = useState("");
 
   return (
     <IonPage>
@@ -156,26 +161,8 @@ const DetailPost = () => {
           <IonTitle id="board_title">
             <IonIcon class="icon" icon={fastFood}></IonIcon>Food Delivery
           </IonTitle>
-          <IonButtons slot="end">
-            <IonButton
-            onClick={() => {
-              presentToast({
-                message: 'Participate:',
-                duration: 5000,
-                buttons: [
-                  {
-                    text: 'Join',
-                    // handler: () => { setHandlerMessage('More Info clicked'); }
-                  },
-                  {
-                    text: 'Leave',
-                    // handler: () => { setHandlerMessage('Dismiss clicked'); }
-                  }
-                ]
-              })
-            }}
-          >Join</IonButton>
-          </IonButtons>
+
+          <IonButtons slot="end"></IonButtons>
         </IonToolbar>
       </IonHeader>
 
@@ -186,9 +173,21 @@ const DetailPost = () => {
               <IonCardTitle>
                 <IonInput value={post.title} readonly={true}></IonInput>
               </IonCardTitle>
-              <IonButton slot="end" href="/EditPost">
-                Edit
-              </IonButton>
+              {post.poster ? (
+                <IonButton slot="end" href={`/EditPost/${id}`}>
+                  Edit
+                </IonButton>
+              ) : null}
+              {!post.poster && !post.joined ? (
+                <IonButton slot="end" onClick={onClickJoin}>
+                  Join
+                </IonButton>
+              ) : null}
+              {!post.poster && post.joined ? (
+                <IonButton slot="end" onClick={onClickLeave}>
+                  Leave
+                </IonButton>
+              ) : null}
             </IonItem>
             <IonItem lines="none">
               <IonCardSubtitle>
@@ -236,23 +235,28 @@ const DetailPost = () => {
                 </IonLabel>
                 <IonInput value={post.price} readonly={true}></IonInput>
               </IonItem>
-
               <IonItem lines="none">
                 <IonLabel>
                   <b>Participants</b>
                 </IonLabel>
-                <IonInput value={post.recruitsNo} readonly={true}></IonInput>
+                <IonInput
+                  value={`${post.joins} / ${post.recruitsNo}`}
+                  readonly={true}
+                ></IonInput>
               </IonItem>
-
-              <IonItem lines="none">
-                <IonLabel>
-                  <b>Contact Information</b>
-                </IonLabel>
-                <IonButton id="click-trigger" slot="end">Check info</IonButton>
-                <IonPopover trigger="click-trigger" triggerAction="click">
-                  <IonInput value={post.contactInfo} readonly={true}></IonInput>
-                </IonPopover>
-              </IonItem>       
+              {post.joined || post.poster ? (
+                <IonItem lines="none">
+                  <IonLabel>
+                    <b>Contact Information</b>
+                  </IonLabel>
+                  <IonButton id="click-trigger" slot="end">
+                    Check info
+                  </IonButton>
+                  <IonPopover trigger="click-trigger" triggerAction="click">
+                    <IonContent>{contactMessage}</IonContent>
+                  </IonPopover>
+                </IonItem>
+              ) : null}
             </IonList>
           </IonCardContent>
         </IonCard>

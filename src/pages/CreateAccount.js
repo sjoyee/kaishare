@@ -11,8 +11,12 @@ import {
   IonText,
 } from "@ionic/react";
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router";
+import serverRequest from "../common";
 
 const CreateAccount = () => {
+  const history = useHistory();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phoneNum, setPhoneNum] = useState("");
@@ -96,11 +100,14 @@ const CreateAccount = () => {
   };
 
   const createAccount = () => {
-    console.log({
-      email: email,
+    serverRequest("/signin/", "POST", {
+      id: email,
       password: password,
-      phoneNum: phoneNum,
-    });
+      phone: phoneNum,
+    })
+      .then((r) => r.json())
+      .then((r) => console.log(r))
+      .then(() => history.push("/login/"));
   };
 
   return (
