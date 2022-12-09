@@ -29,26 +29,6 @@ const EditPost = () => {
 
   const history = useHistory();
 
-  serverRequest("/login/", "POST", {
-    id: "test@kaist.ac.kr",
-    password: "test",
-  })
-    .then()
-    .then();
-
-  //   dummy data
-  const postDetails = {
-    title: "Let's eat!",
-    content: "I want to delivery chicken...\nSo so...\nFinally...",
-    product: "ABC Chicken",
-    place: "XYZ dormitory",
-    // active, closed, disabled
-    status: "active",
-    capacity: 4,
-    price: 18000,
-    datetime: "2022-11-27T17:00",
-  };
-
   serverRequest(`/post/food/${id}`, "GET")
     .then((r) => r.json())
     .then((r) => {

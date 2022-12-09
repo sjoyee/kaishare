@@ -35,13 +35,6 @@ const WritePost = () => {
 
   const history = useHistory();
 
-  serverRequest("/login/", "POST", {
-    id: "test@kaist.ac.kr",
-    password: "test",
-  })
-    .then()
-    .then();
-
   const submitPost = () => {
     const post = {
       title: title,
