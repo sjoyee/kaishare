@@ -48,7 +48,9 @@ const DetailPost = () => {
 
   const [post, setPost] = useState(placeHolder);
   const [comments, setComments] = useState([]);
-  const [contactMessage, setContactMessage] = useState("");
+  const [contactMessage, setContactMessage] = useState(
+    "cannot find contact info"
+  );
 
   serverRequest(`/post/food/${id}`, "GET")
     .then((r) => r.json())
@@ -111,6 +113,30 @@ const DetailPost = () => {
       });
   };
 
+  function onClickJoin() {
+    serverRequest(`/post/food/${id}/join`, "POST", {
+      category: "food",
+      p_id: id,
+    })
+      .then((r) => r.json())
+      .then((r) => {
+        console.log(r);
+        window.location.reload();
+      });
+  }
+
+  function onClickLeave() {
+    serverRequest(`/post/food/${id}/leave`, "POST", {
+      category: "food",
+      p_id: id,
+    })
+      .then((r) => r.json())
+      .then((r) => {
+        console.log(r);
+        window.location.reload();
+      });
+  }
+
   // for delete comment
   const [deleteCommentAlert, setDeleteCommentAlert] = useState(false);
   const [deleteComment, setDeleteComment] = useState();
@@ -135,28 +161,8 @@ const DetailPost = () => {
           <IonTitle id="board_title">
             <IonIcon class="icon" icon={fastFood}></IonIcon>Food Delivery
           </IonTitle>
-          <IonButtons slot="end">
-            <IonButton
-              onClick={() => {
-                presentToast({
-                  message: "Participate:",
-                  duration: 5000,
-                  buttons: [
-                    {
-                      text: "Join",
-                      // handler: () => { setHandlerMessage('More Info clicked'); }
-                    },
-                    {
-                      text: "Leave",
-                      // handler: () => { setHandlerMessage('Dismiss clicked'); }
-                    },
-                  ],
-                });
-              }}
-            >
-              Join
-            </IonButton>
-          </IonButtons>
+
+          <IonButtons slot="end"></IonButtons>
         </IonToolbar>
       </IonHeader>
 
@@ -170,6 +176,16 @@ const DetailPost = () => {
               {post.poster ? (
                 <IonButton slot="end" href={`/EditPost/${id}`}>
                   Edit
+                </IonButton>
+              ) : null}
+              {!post.poster && !post.joined ? (
+                <IonButton slot="end" onClick={onClickJoin}>
+                  Join
+                </IonButton>
+              ) : null}
+              {!post.poster && post.joined ? (
+                <IonButton slot="end" onClick={onClickLeave}>
+                  Leave
                 </IonButton>
               ) : null}
             </IonItem>
