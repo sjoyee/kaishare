@@ -85,7 +85,7 @@ const EditPost = () => {
     serverRequest(`/post/food/${id}/disable`, "PATCH")
       .then((r) => r.json())
       .then((r) => console.log(r))
-      .then(() => window.history.back());
+      .then(() => history.push("/food/"));
   };
 
   const deletePost = () => {
