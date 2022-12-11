@@ -39,6 +39,7 @@ const placeHolder = {
   datetime: "",
   place: "",
   price: 1,
+  status: "active",
   joined: false,
   poster: false,
 };
@@ -68,6 +69,7 @@ const DetailPost = () => {
         datetime: r.time,
         place: r.place,
         price: r.price,
+        status: r.status,
         joined: r.joined,
         poster: r.poster,
       };
@@ -244,19 +246,22 @@ const DetailPost = () => {
                   readonly={true}
                 ></IonInput>
               </IonItem>
-              {post.joined || post.poster ? (
-                <IonItem lines="none">
-                  <IonLabel>
-                    <b>Contact Information</b>
-                  </IonLabel>
-                  <IonButton id="click-trigger" slot="end">
-                    Check info
-                  </IonButton>
-                  <IonPopover trigger="click-trigger" triggerAction="click">
-                    <IonContent>{contactMessage}</IonContent>
-                  </IonPopover>
-                </IonItem>
-              ) : null}
+              <IonItem lines="none">
+                <IonLabel>
+                  <b>Contact Information</b>
+                </IonLabel>
+                <IonInput value={post.status} readonly={true}></IonInput>
+                {(post.joined || post.poster) && post.status == "closed" ? (
+                  <>
+                    <IonButton id="click-trigger" slot="end">
+                      Check Contact Info
+                    </IonButton>
+                    <IonPopover trigger="click-trigger" triggerAction="click">
+                      <IonContent>{contactMessage}</IonContent>
+                    </IonPopover>
+                  </>
+                ) : null}
+              </IonItem>
             </IonList>
           </IonCardContent>
         </IonCard>
