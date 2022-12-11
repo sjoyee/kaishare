@@ -257,29 +257,31 @@ const EditPost = () => {
                     Close
                   </IonButton>
                 )}
-                <IonButton
-                  color="danger"
-                  onClick={() =>
-                    presentAlert({
-                      header: "Are you sure you want to delete the post?",
-                      buttons: [
-                        {
-                          text: "Cancel",
-                          role: "cancel",
-                        },
-                        {
-                          text: "OK",
-                          role: "confirm",
-                          handler: () => {
-                            deletePost();
+                {status === CLOSED ? null : (
+                  <IonButton
+                    color="danger"
+                    onClick={() =>
+                      presentAlert({
+                        header: "Are you sure you want to delete the post?",
+                        buttons: [
+                          {
+                            text: "Cancel",
+                            role: "cancel",
                           },
-                        },
-                      ],
-                    })
-                  }
-                >
-                  Delete
-                </IonButton>
+                          {
+                            text: "OK",
+                            role: "confirm",
+                            handler: () => {
+                              deletePost();
+                            },
+                          },
+                        ],
+                      })
+                    }
+                  >
+                    Delete
+                  </IonButton>
+                )}
               </IonItem>
             </IonList>
           </IonCardContent>
