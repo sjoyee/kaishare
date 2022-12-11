@@ -75,6 +75,8 @@ const DetailPost = () => {
       };
       setPost(newPost);
 
+      if (r.status == "closed") onClickContact();
+
       const newComments = r.comments.map((comment) => {
         return {
           writer: comment.nickname,
@@ -84,21 +86,6 @@ const DetailPost = () => {
 
       setComments(newComments);
     });
-  /*
-  serverRequest(`/post/food/${id}/share`, "GET")
-    .then((r) => r.json())
-    .then((r) => {
-      if (r == "Only closed event can see the information.")
-        setContactMessage(r);
-      else {
-        setContactMessage(
-          r.map((contact) => {
-            return `${contact.id} ${contact.phone}\n`;
-          })
-        );
-      }
-    });
-    */
 
   // for create new comment
   const [newCommentWriter, setNewCommentWriter] = useState([]);
@@ -136,6 +123,22 @@ const DetailPost = () => {
       .then((r) => {
         console.log(r);
         window.location.reload();
+      });
+  }
+
+  function onClickContact() {
+    serverRequest(`/post/food/${id}/share`, "GET")
+      .then((r) => r.json())
+      .then((r) => {
+        if (r == "Only closed event can see the information.")
+          setContactMessage(r);
+        else {
+          setContactMessage(
+            r.map((contact) => {
+              return `${contact.id} : ${contact.phone}  \n`;
+            })
+          );
+        }
       });
   }
 
