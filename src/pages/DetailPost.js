@@ -175,7 +175,7 @@ const DetailPost = () => {
               <IonCardTitle>
                 <IonInput value={post.title} readonly={true}></IonInput>
               </IonCardTitle>
-              {post.poster ? (
+              {post.poster && post.status == "active" ? (
                 <IonButton slot="end" href={`/EditPost/${id}`}>
                   Edit
                 </IonButton>
