@@ -35,7 +35,7 @@ const EditPost = () => {
       if (content != "") return;
       console.log(r);
       setTitle(r.title);
-      //writer: r.nickname,
+      setNickname(r.nickname);
       setContent(r.content);
       setProduct(r.product);
       setCapacity(r.capacity);
@@ -46,6 +46,7 @@ const EditPost = () => {
     });
 
   const [title, setTitle] = useState("");
+  const [nickname, setNickname] = useState("");
   const [content, setContent] = useState("");
   const [product, setProduct] = useState("");
   const [capacity, setCapacity] = useState("");
@@ -61,15 +62,18 @@ const EditPost = () => {
   const saveEditedPost = () => {
     const post = {
       title: title,
+      nickname: nickname,
       content: content,
       product: product,
-      capacity: parseInt(capacity),
-      datetime: datetime,
+      time: datetime,
       place: place,
       price: parseInt(price),
+      capacity: capacity,
     };
-    console.log(post);
-    window.history.back();
+    serverRequest(`/post/food/${id}`, "PATCH", post)
+      .then((r) => r.json())
+      .then((r) => console.log(r))
+      .then(() => history.push(`/food/${id}`));
   };
 
   const closePost = () => {
@@ -77,7 +81,7 @@ const EditPost = () => {
     serverRequest(`/post/food/${id}/close`, "PATCH")
       .then((r) => r.json())
       .then((r) => console.log(r))
-      .then(() => window.history.back());
+      .then(() => history.push(`/food/${id}`));
   };
 
   const disablePost = () => {
@@ -149,7 +153,16 @@ const EditPost = () => {
                   }}
                 ></IonInput>
               </IonItem>
-
+              <IonItem>
+                <IonInput
+                  placeholder="Nickname"
+                  value={nickname}
+                  required={true}
+                  onIonChange={(e) => {
+                    setNickname(e.detail.value);
+                  }}
+                ></IonInput>
+              </IonItem>
               <IonItem>
                 <IonTextarea
                   placeholder="Post Content"
