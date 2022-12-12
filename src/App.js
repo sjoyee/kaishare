@@ -2,7 +2,7 @@ import { Redirect, Route } from "react-router-dom";
 import { IonApp, IonRouterOutlet, setupIonicReact } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import Home from "./pages/Home";
-import Food from "./pages/Food";
+import List from "./pages/List";
 import Search from "./pages/Search";
 import WritePost from "./pages/WritePost";
 import EditPost from "./pages/EditPost";
@@ -49,7 +49,7 @@ const App = () => (
           <DetailPost />
         </Route>
         <Route exact path="/food">
-          <Food />
+          <List />
         </Route>
         <Route exact path="/search">
           <Search />

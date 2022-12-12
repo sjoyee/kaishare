@@ -23,11 +23,11 @@ import {
   IonFabButton,
 } from "@ionic/react";
 import { fastFood, pencil, search } from "ionicons/icons";
-import "./Food.css";
+import "./List.css";
 import Tab from "../components/Tab";
 import serverRequest from "../common";
 
-const Food = () => {
+const List = () => {
   const modal = useRef(null);
 
   const [posts, setPosts] = useState([]);
@@ -296,4 +296,4 @@ const Food = () => {
   );
 };
 
-export default Food;
+export default List;
