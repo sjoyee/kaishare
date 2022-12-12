@@ -22,15 +22,40 @@ import {
   IonFab,
   IonFabButton,
 } from "@ionic/react";
-import { fastFood, pencil, search } from "ionicons/icons";
+import { bagHandle, car, fastFood, pencil, search } from "ionicons/icons";
 import "./List.css";
 import Tab from "../components/Tab";
 import serverRequest from "../common";
+import { useParams } from "react-router";
 
 const List = () => {
   const modal = useRef(null);
 
+  const { category } = useParams();
+
   const [posts, setPosts] = useState([]);
+
+  const categoryIcon = (() => {
+    switch (category) {
+      case "food":
+        return fastFood;
+      case "taxi":
+        return car;
+      case "product":
+        return bagHandle;
+    }
+  })();
+
+  const categoryTitle = (() => {
+    switch (category) {
+      case "food":
+        return "Food Delivery";
+      case "taxi":
+        return "Taxi Pool";
+      case "product":
+        return "Product Delivery";
+    }
+  })();
 
   function responseToPosts(response) {
     console.log(response);
@@ -47,7 +72,7 @@ const List = () => {
     }
   }
 
-  serverRequest("/post/food/", "GET")
+  serverRequest(`/post/${category}/`, "GET")
     .then((r) => r.json())
     .then((r) => responseToPosts(r));
 
@@ -124,10 +149,11 @@ const List = () => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="./home"></IonBackButton>
+            <IonBackButton defaultHref="/home"></IonBackButton>
           </IonButtons>
           <IonTitle id="board_title">
-            <IonIcon class="icon" icon={fastFood}></IonIcon>Food Delivery
+            <IonIcon class="icon" icon={categoryIcon}></IonIcon>
+            {categoryTitle}
           </IonTitle>
           <IonButtons slot="end">
             <IonButton id="open-search">
@@ -140,7 +166,7 @@ const List = () => {
       <IonContent>
         <IonList>
           {posts.map((post, index) => (
-            <IonItem href={`./DetailPost/${post.pid}`} key={index}>
+            <IonItem href={`/DetailPost/${post.pid}`} key={index}>
               <IonText id="postWriter">{post.writer}</IonText>
               <IonText>{post.title}</IonText>
             </IonItem>
@@ -156,7 +182,7 @@ const List = () => {
         </IonInfiniteScroll>
 
         <IonFab slot="fixed" vertical="bottom" horizontal="end" id="writePost">
-          <IonFabButton color="tertiary" href="./WritePost">
+          <IonFabButton color="tertiary" href="/WritePost">
             <IonIcon icon={pencil}></IonIcon>
           </IonFabButton>
         </IonFab>

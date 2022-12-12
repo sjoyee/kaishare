@@ -27,15 +27,15 @@ const Home = () => {
         </IonGrid>
 
         <IonList id="boardList" lines="full">
-          <IonItem class="board">
+          <IonItem class="board" href="./list/taxi">
             <IonIcon class="icon" slot="start" icon={car}></IonIcon>
             <IonLabel class="label">Taxi Pool</IonLabel>
           </IonItem>
-          <IonItem class="board" href="./food">
+          <IonItem class="board" href="./list/food">
             <IonIcon class="icon" slot="start" icon={fastFood}></IonIcon>
             <IonLabel class="label">Food Delivery</IonLabel>
           </IonItem>
-          <IonItem class="board">
+          <IonItem class="board" href="./list/product">
             <IonIcon class="icon" slot="start" icon={bagHandle}></IonIcon>
             <IonLabel class="label">Product Delivery</IonLabel>
           </IonItem>

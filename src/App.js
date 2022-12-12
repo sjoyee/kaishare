@@ -48,9 +48,6 @@ const App = () => (
         <Route exact path="/detailpost/:id">
           <DetailPost />
         </Route>
-        <Route exact path="/food">
-          <List />
-        </Route>
         <Route exact path="/search">
           <Search />
         </Route>
@@ -59,6 +56,9 @@ const App = () => (
         </Route>
         <Route exact path="/createaccount">
           <CreateAccount />
+        </Route>
+        <Route exact path="/list/:category">
+          <List />
         </Route>
         <Route exact path="/">
           <Redirect to="/login" />
