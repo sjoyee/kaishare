@@ -21,12 +21,12 @@ import {
   IonPopover,
   useIonToast,
 } from "@ionic/react";
-import { fastFood, paperPlane } from "ionicons/icons";
+import { paperPlane } from "ionicons/icons";
 import "./DetailPost.css";
 
 import { useState } from "react";
 import Tab from "../components/Tab";
-import { serverRequest } from "../common";
+import { categoryIcon, categoryTitle, serverRequest } from "../common";
 import { useParams } from "react-router";
 
 const placeHolder = {
@@ -158,7 +158,8 @@ const DetailPost = () => {
             <IonBackButton defaultHref={`/list/${category}`}></IonBackButton>
           </IonButtons>
           <IonTitle id="board_title">
-            <IonIcon class="icon" icon={fastFood}></IonIcon>Food Delivery
+            <IonIcon class="icon" icon={categoryIcon(category)}></IonIcon>
+            {categoryTitle(category)}
           </IonTitle>
 
           <IonButtons slot="end"></IonButtons>

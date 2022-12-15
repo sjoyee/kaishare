@@ -22,10 +22,10 @@ import {
   IonFab,
   IonFabButton,
 } from "@ionic/react";
-import { bagHandle, car, fastFood, pencil, search } from "ionicons/icons";
+import { pencil, search } from "ionicons/icons";
 import "./List.css";
 import Tab from "../components/Tab";
-import { serverRequest } from "../common";
+import { categoryIcon, categoryTitle, serverRequest } from "../common";
 import { useParams } from "react-router";
 
 const List = () => {
@@ -34,28 +34,6 @@ const List = () => {
   const { category } = useParams();
 
   const [posts, setPosts] = useState([]);
-
-  const categoryIcon = (() => {
-    switch (category) {
-      case "food":
-        return fastFood;
-      case "taxi":
-        return car;
-      case "product":
-        return bagHandle;
-    }
-  })();
-
-  const categoryTitle = (() => {
-    switch (category) {
-      case "food":
-        return "Food Delivery";
-      case "taxi":
-        return "Taxi Pool";
-      case "product":
-        return "Product Delivery";
-    }
-  })();
 
   function responseToPosts(response) {
     console.log(response);
@@ -152,8 +130,8 @@ const List = () => {
             <IonBackButton defaultHref="/home"></IonBackButton>
           </IonButtons>
           <IonTitle id="board_title">
-            <IonIcon class="icon" icon={categoryIcon}></IonIcon>
-            {categoryTitle}
+            <IonIcon class="icon" icon={categoryIcon(category)}></IonIcon>
+            {categoryTitle(category)}
           </IonTitle>
           <IonButtons slot="end">
             <IonButton id="open-search">
