@@ -12,7 +12,7 @@ import {
 } from "@ionic/react";
 import React, { useState } from "react";
 import { useHistory } from "react-router";
-import serverRequest from "../common";
+import { serverRequest } from "../common";
 
 const Login = () => {
   const [email, setEmail] = useState("");

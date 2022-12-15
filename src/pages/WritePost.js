@@ -20,7 +20,7 @@ import {
 
 import { useState } from "react";
 import { useHistory, useParams } from "react-router";
-import serverRequest from "../common";
+import { serverRequest } from "../common";
 import Tab from "../components/Tab";
 
 const WritePost = () => {

@@ -25,7 +25,7 @@ import {
 import { bagHandle, car, fastFood, pencil, search } from "ionicons/icons";
 import "./List.css";
 import Tab from "../components/Tab";
-import serverRequest from "../common";
+import { serverRequest } from "../common";
 import { useParams } from "react-router";
 
 const List = () => {

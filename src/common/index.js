@@ -1,7 +1,9 @@
+import { bagHandle, car, fastFood } from "ionicons/icons";
+
 const ENDPOINT =
   "https://10x53vstw6.execute-api.ap-northeast-2.amazonaws.com/production";
 
-export default async function serverRequest(url, method, body = null) {
+export async function serverRequest(url, method, body = null) {
   const req = {
     method: method,
     credentials: "include",

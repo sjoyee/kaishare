@@ -26,7 +26,7 @@ import "./DetailPost.css";
 
 import { useState } from "react";
 import Tab from "../components/Tab";
-import serverRequest from "../common";
+import { serverRequest } from "../common";
 import { useParams } from "react-router";
 
 const placeHolder = {
