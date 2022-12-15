@@ -25,11 +25,11 @@ import serverRequest from "../common";
 import Tab from "../components/Tab";
 
 const EditPost = () => {
-  const { id } = useParams();
+  const { category, id } = useParams();
 
   const history = useHistory();
 
-  serverRequest(`/post/food/${id}`, "GET")
+  serverRequest(`/post/${category}/${id}`, "GET")
     .then((r) => r.json())
     .then((r) => {
       if (content != "") return;
@@ -70,33 +70,33 @@ const EditPost = () => {
       price: parseInt(price),
       capacity: capacity,
     };
-    serverRequest(`/post/food/${id}`, "PATCH", post)
+    serverRequest(`/post/${category}/${id}`, "PATCH", post)
       .then((r) => r.json())
       .then((r) => console.log(r))
-      .then(() => history.push(`/food/${id}`));
+      .then(() => history.push(`/detailpost/${category}/${id}`));
   };
 
   const closePost = () => {
     setStatus(CLOSED);
-    serverRequest(`/post/food/${id}/close`, "PATCH")
+    serverRequest(`/post/${category}/${id}/close`, "PATCH")
       .then((r) => r.json())
       .then((r) => console.log(r))
-      .then(() => history.push(`/food/${id}`));
+      .then(() => history.push(`/detailpost/${category}/${id}`));
   };
 
   const disablePost = () => {
     setStatus(DISABLED);
-    serverRequest(`/post/food/${id}/disable`, "PATCH")
+    serverRequest(`/post/${category}/${id}/disable`, "PATCH")
       .then((r) => r.json())
       .then((r) => console.log(r))
-      .then(() => history.push("/food/"));
+      .then(() => history.push(`/list/${category}/`));
   };
 
   const deletePost = () => {
-    serverRequest(`/post/food/${id}`, "DELETE")
+    serverRequest(`/post/${category}/${id}`, "DELETE")
       .then((r) => r.json())
       .then((r) => console.log(r))
-      .then(() => history.push("/food/"));
+      .then(() => history.push(`/list/${category}/`));
   };
 
   const [presentAlert] = useIonAlert();
@@ -106,7 +106,7 @@ const EditPost = () => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/Food"></IonBackButton>
+            <IonBackButton defaultHref={`/list/${category}`}></IonBackButton>
           </IonButtons>
           <IonGrid>
             <IonRow>
@@ -241,7 +241,7 @@ const EditPost = () => {
                 {status === CLOSED ? (
                   <IonButton
                     color="light"
-                    href="/Food"
+                    href={`list/${category}`}
                     onClick={() => disablePost()}
                   >
                     Disable

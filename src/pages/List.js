@@ -166,7 +166,7 @@ const List = () => {
       <IonContent>
         <IonList>
           {posts.map((post, index) => (
-            <IonItem href={`/DetailPost/${post.pid}`} key={index}>
+            <IonItem href={`/DetailPost/${category}/${post.pid}`} key={index}>
               <IonText id="postWriter">{post.writer}</IonText>
               <IonText>{post.title}</IonText>
             </IonItem>
@@ -182,7 +182,7 @@ const List = () => {
         </IonInfiniteScroll>
 
         <IonFab slot="fixed" vertical="bottom" horizontal="end" id="writePost">
-          <IonFabButton color="tertiary" href="/WritePost">
+          <IonFabButton color="tertiary" href={`/WritePost/${category}`}>
             <IonIcon icon={pencil}></IonIcon>
           </IonFabButton>
         </IonFab>

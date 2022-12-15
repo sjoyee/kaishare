@@ -45,7 +45,7 @@ const placeHolder = {
 };
 
 const DetailPost = () => {
-  const { id } = useParams();
+  const { category, id } = useParams();
 
   const [post, setPost] = useState(placeHolder);
   const [comments, setComments] = useState([]);
@@ -53,7 +53,7 @@ const DetailPost = () => {
     "cannot find contact info"
   );
 
-  serverRequest(`/post/food/${id}`, "GET")
+  serverRequest(`/post/${category}/${id}`, "GET")
     .then((r) => r.json())
     .then((r) => {
       if (post != placeHolder) return;
@@ -91,7 +91,7 @@ const DetailPost = () => {
   const [newCommentWriter, setNewCommentWriter] = useState([]);
   const [newCommentContent, setNewCommentContent] = useState([]);
   const submitNewComment = () => {
-    serverRequest(`/post/food/${id}/comment`, "POST", {
+    serverRequest(`/post/${category}/${id}/comment`, "POST", {
       nickname: newCommentWriter,
       content: newCommentContent,
     })
@@ -103,10 +103,7 @@ const DetailPost = () => {
   };
 
   function onClickJoin() {
-    serverRequest(`/post/food/${id}/join`, "POST", {
-      category: "food",
-      p_id: id,
-    })
+    serverRequest(`/post/${category}/${id}/join`, "POST")
       .then((r) => r.json())
       .then((r) => {
         console.log(r);
@@ -115,10 +112,7 @@ const DetailPost = () => {
   }
 
   function onClickLeave() {
-    serverRequest(`/post/food/${id}/leave`, "POST", {
-      category: "food",
-      p_id: id,
-    })
+    serverRequest(`/post/${category}/${id}/leave`, "POST")
       .then((r) => r.json())
       .then((r) => {
         console.log(r);
@@ -127,7 +121,7 @@ const DetailPost = () => {
   }
 
   function onClickContact() {
-    serverRequest(`/post/food/${id}/share`, "GET")
+    serverRequest(`/post/${category}/${id}/share`, "GET")
       .then((r) => r.json())
       .then((r) => {
         if (r == "Only closed event can see the information.")
@@ -161,7 +155,7 @@ const DetailPost = () => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/Food"></IonBackButton>
+            <IonBackButton defaultHref={`/list/${category}`}></IonBackButton>
           </IonButtons>
           <IonTitle id="board_title">
             <IonIcon class="icon" icon={fastFood}></IonIcon>Food Delivery
@@ -179,7 +173,7 @@ const DetailPost = () => {
                 <IonInput value={post.title} readonly={true}></IonInput>
               </IonCardTitle>
               {post.poster && post.status == "active" ? (
-                <IonButton slot="end" href={`/EditPost/${id}`}>
+                <IonButton slot="end" href={`/EditPost/${category}/${id}`}>
                   Edit
                 </IonButton>
               ) : null}

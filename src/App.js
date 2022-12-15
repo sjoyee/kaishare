@@ -39,16 +39,16 @@ const App = () => (
         <Route exact path="/home">
           <Home />
         </Route>
-        <Route exact path="/writepost">
+        <Route exact path="/writepost/:category">
           <WritePost />
         </Route>
-        <Route exact path="/editpost/:id">
+        <Route exact path="/editpost/:category/:id">
           <EditPost />
         </Route>
-        <Route exact path="/detailpost/:id">
+        <Route exact path="/detailpost/:category/:id">
           <DetailPost />
         </Route>
-        <Route exact path="/search">
+        <Route exact path="/search/:category">
           <Search />
         </Route>
         <Route exact path="/login">
