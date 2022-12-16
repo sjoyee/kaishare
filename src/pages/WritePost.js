@@ -19,11 +19,13 @@ import {
 } from "@ionic/react";
 
 import { useState } from "react";
-import { useHistory } from "react-router";
-import serverRequest from "../common";
+import { useHistory, useParams } from "react-router";
+import { serverRequest } from "../common";
 import Tab from "../components/Tab";
 
 const WritePost = () => {
+  const { category } = useParams();
+
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [product, setProduct] = useState("");
@@ -48,10 +50,10 @@ const WritePost = () => {
     };
     console.log(post);
 
-    serverRequest(`/post/food/`, "POST", post)
+    serverRequest(`/post/${category}/`, "POST", post)
       .then((r) => r.json())
       .then((r) => console.log(r))
-      .then(() => history.push("/food/"));
+      .then(() => history.push(`/list/${category}`));
   };
 
   return (
@@ -59,7 +61,7 @@ const WritePost = () => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/Food"></IonBackButton>
+            <IonBackButton defaultHref={`/list/${category}`}></IonBackButton>
           </IonButtons>
           <IonGrid>
             <IonRow>

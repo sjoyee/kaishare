@@ -22,13 +22,16 @@ import {
   IonFab,
   IonFabButton,
 } from "@ionic/react";
-import { fastFood, pencil, search } from "ionicons/icons";
-import "./Food.css";
+import { pencil, search } from "ionicons/icons";
+import "./List.css";
 import Tab from "../components/Tab";
-import serverRequest from "../common";
+import { categoryIcon, categoryTitle, serverRequest } from "../common";
+import { useParams } from "react-router";
 
-const Food = () => {
+const List = () => {
   const modal = useRef(null);
+
+  const { category } = useParams();
 
   const [posts, setPosts] = useState([]);
 
@@ -47,7 +50,7 @@ const Food = () => {
     }
   }
 
-  serverRequest("/post/food/", "GET")
+  serverRequest(`/post/${category}/`, "GET")
     .then((r) => r.json())
     .then((r) => responseToPosts(r));
 
@@ -124,10 +127,11 @@ const Food = () => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="./home"></IonBackButton>
+            <IonBackButton defaultHref="/home"></IonBackButton>
           </IonButtons>
           <IonTitle id="board_title">
-            <IonIcon class="icon" icon={fastFood}></IonIcon>Food Delivery
+            <IonIcon class="icon" icon={categoryIcon(category)}></IonIcon>
+            {categoryTitle(category)}
           </IonTitle>
           <IonButtons slot="end">
             <IonButton id="open-search">
@@ -140,7 +144,7 @@ const Food = () => {
       <IonContent>
         <IonList>
           {posts.map((post, index) => (
-            <IonItem href={`./DetailPost/${post.pid}`} key={index}>
+            <IonItem href={`/DetailPost/${category}/${post.pid}`} key={index}>
               <IonText id="postWriter">{post.writer}</IonText>
               <IonText>{post.title}</IonText>
             </IonItem>
@@ -156,7 +160,7 @@ const Food = () => {
         </IonInfiniteScroll>
 
         <IonFab slot="fixed" vertical="bottom" horizontal="end" id="writePost">
-          <IonFabButton color="tertiary" href="./WritePost">
+          <IonFabButton color="tertiary" href={`/WritePost/${category}`}>
             <IonIcon icon={pencil}></IonIcon>
           </IonFabButton>
         </IonFab>
@@ -296,4 +300,4 @@ const Food = () => {
   );
 };
 
-export default Food;
+export default List;

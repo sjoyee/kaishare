@@ -10,9 +10,9 @@ import {
   IonRow,
   IonGrid,
 } from "@ionic/react";
-import { car, fastFood, bagHandle } from "ionicons/icons";
 import "./Home.css";
 import Tab from "../components/Tab";
+import { categoryIcon, categoryTitle } from "../common";
 
 const Home = () => {
   return (
@@ -27,17 +27,29 @@ const Home = () => {
         </IonGrid>
 
         <IonList id="boardList" lines="full">
-          <IonItem class="board">
-            <IonIcon class="icon" slot="start" icon={car}></IonIcon>
-            <IonLabel class="label">Taxi Pool</IonLabel>
+          <IonItem class="board" href="./list/taxi">
+            <IonIcon
+              class="icon"
+              slot="start"
+              icon={categoryIcon("taxi")}
+            ></IonIcon>
+            <IonLabel class="label">{categoryTitle("taxi")}</IonLabel>
           </IonItem>
-          <IonItem class="board" href="./food">
-            <IonIcon class="icon" slot="start" icon={fastFood}></IonIcon>
-            <IonLabel class="label">Food Delivery</IonLabel>
+          <IonItem class="board" href="./list/food">
+            <IonIcon
+              class="icon"
+              slot="start"
+              icon={categoryIcon("food")}
+            ></IonIcon>
+            <IonLabel class="label">{categoryTitle("food")}</IonLabel>
           </IonItem>
-          <IonItem class="board">
-            <IonIcon class="icon" slot="start" icon={bagHandle}></IonIcon>
-            <IonLabel class="label">Product Delivery</IonLabel>
+          <IonItem class="board" href="./list/product">
+            <IonIcon
+              class="icon"
+              slot="start"
+              icon={categoryIcon("product")}
+            ></IonIcon>
+            <IonLabel class="label">{categoryTitle("product")}</IonLabel>
           </IonItem>
         </IonList>
       </IonContent>

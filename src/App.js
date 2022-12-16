@@ -2,7 +2,7 @@ import { Redirect, Route } from "react-router-dom";
 import { IonApp, IonRouterOutlet, setupIonicReact } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import Home from "./pages/Home";
-import Food from "./pages/Food";
+import List from "./pages/List";
 import Search from "./pages/Search";
 import WritePost from "./pages/WritePost";
 import EditPost from "./pages/EditPost";
@@ -39,19 +39,16 @@ const App = () => (
         <Route exact path="/home">
           <Home />
         </Route>
-        <Route exact path="/writepost">
+        <Route exact path="/writepost/:category">
           <WritePost />
         </Route>
-        <Route exact path="/editpost/:id">
+        <Route exact path="/editpost/:category/:id">
           <EditPost />
         </Route>
-        <Route exact path="/detailpost/:id">
+        <Route exact path="/detailpost/:category/:id">
           <DetailPost />
         </Route>
-        <Route exact path="/food">
-          <Food />
-        </Route>
-        <Route exact path="/search">
+        <Route exact path="/search/:category">
           <Search />
         </Route>
         <Route exact path="/login">
@@ -59,6 +56,9 @@ const App = () => (
         </Route>
         <Route exact path="/createaccount">
           <CreateAccount />
+        </Route>
+        <Route exact path="/list/:category">
+          <List />
         </Route>
         <Route exact path="/">
           <Redirect to="/login" />
