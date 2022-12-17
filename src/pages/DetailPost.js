@@ -27,7 +27,7 @@ import "./DetailPost.css";
 import { useState } from "react";
 import Tab from "../components/Tab";
 import { categoryIcon, categoryTitle, serverRequest } from "../common";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 
 const placeHolder = {
   title: "",
@@ -46,6 +46,7 @@ const placeHolder = {
 
 const DetailPost = () => {
   const { category, id } = useParams();
+  const history = useHistory();
 
   const [post, setPost] = useState(placeHolder);
   const [comments, setComments] = useState([]);
@@ -101,6 +102,13 @@ const DetailPost = () => {
         window.location.reload();
       });
   };
+
+  function onClickDisable() {
+    serverRequest(`/post/${category}/${id}/disable`, "PATCH")
+      .then((r) => r.json())
+      .then((r) => console.log(r))
+      .then(() => history.push(`/list/${category}/`));
+  }
 
   function onClickJoin() {
     serverRequest(`/post/${category}/${id}/join`, "POST")
@@ -181,6 +189,11 @@ const DetailPost = () => {
               {!post.poster && !post.joined ? (
                 <IonButton slot="end" onClick={onClickJoin}>
                   Join
+                </IonButton>
+              ) : null}
+              {post.poster && post.status == "closed" ? (
+                <IonButton slot="end" onClick={onClickDisable}>
+                  Disable
                 </IonButton>
               ) : null}
               {!post.poster && post.joined ? (

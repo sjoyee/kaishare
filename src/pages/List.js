@@ -286,7 +286,7 @@ const List = () => {
                   id="modal_submit"
                   fill="solid"
                   onClick={submitAdvancedSearch}
-                  href="./Search"
+                  href="./Search/food"
                 >
                   Search
                 </IonButton>
