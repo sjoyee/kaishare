@@ -15,18 +15,21 @@ import {
 } from "@ionic/react";
 import "./Search.css";
 import Tab from "../components/Tab";
+import { useParams } from "react-router";
 
 const Search = () => {
+  const { category } = useParams();
+
   // dummy post list
   const Post1 = {
     writer: "William",
     title: "abc",
-    id: "1"
+    id: "1",
   };
   const Post2 = {
     writer: "Kelly",
     title: "defg",
-    id: "2"
+    id: "2",
   };
   const [posts, setPosts] = useState([Post1, Post2]);
 
@@ -37,7 +40,7 @@ const Search = () => {
       newPosts.push({
         writer: `Writer ${1 + posts.length + i}`,
         title: `Post ${1 + posts.length + i}`,
-        id: 1 + posts.length + i
+        id: 1 + posts.length + i,
       });
     }
     setPosts([...posts, ...newPosts]);
@@ -48,7 +51,7 @@ const Search = () => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="./food"></IonBackButton>
+            <IonBackButton defaultHref={`/list/${category}`}></IonBackButton>
           </IonButtons>
           <IonTitle id="board_title">Search Result</IonTitle>
         </IonToolbar>
